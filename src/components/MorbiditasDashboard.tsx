@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SidebarDashboard from './SidebarDashboard.tsx';
 
 function MorbiditasDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
@@ -7,21 +8,7 @@ function MorbiditasDashboard() {
 
     return (
         <div className="flex h-screen">
-            <aside className="w-64 bg-white shadow-md">
-                <div className="flex items-center justify-center h-16 border-b">
-                    <img src="https://placehold.co/40x40" alt="Logo" className="mr-2" />
-                    <span className="text-lg font-semibold text-red-600">ILP MOJOKERTO</span>
-                </div>
-                <nav className="mt-4">
-                    <NavItem text="Dashboard Utama" icon="fas fa-home" />
-                    <NavItem text="Dashboard Morbiditas" icon="fas fa-chart-bar" active />
-                    <NavItem text="Dashboard Layanan" icon="fas fa-concierge-bell" />
-                </nav>
-                <div className="absolute bottom-0 w-full p-4">
-                    <NavItem text="Pengaturan" icon="fas fa-cog" />
-                    <NavItem text="Keluar" icon="fas fa-sign-out-alt" className="text-red-600" />
-                </div>
-            </aside>
+            <SidebarDashboard/>
             <main className="flex-1 p-6">
                 <Header />
                 <Filters />

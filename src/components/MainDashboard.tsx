@@ -1,37 +1,90 @@
 import {useState} from "react";
+import SidebarDashboard from './SidebarDashboard.tsx';
+import Chart from "react-apexcharts";
+
+
 
 function MainDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
 
+
+
+   // Data for Donut Charts
+    const donutData = {
+        seriesPenduduk: [50, 50],  // Example data for male/female population
+        seriesTerlayani: [45, 55], // Example data for male/female served
+        options: {
+            chart: {
+                type: 'donut',
+            },
+            labels: ['Laki-Laki', 'Wanita'],
+            colors: ['#00E396', '#F4607A'],
+            legend: {
+                position: 'bottom',
+            },
+        },
+    };
+
+
+
+    // Data for Bar Chart
+    const barChartData = {
+        series: [
+            {
+                name: 'Target',
+                data: [10, 25, 30, 40, 50]  // Example monthly targets
+            },
+            {
+                name: 'Terlayani',
+                data: [5, 20, 25, 35, 45]   // Example monthly actuals
+            }
+        ],
+        options: {
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            },
+            yaxis: {
+                title: {
+                    text: 'Jumlah'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val: number) {
+                        return `${val} layanan`;
+                    }
+                }
+            }
+        }
+    };
     return (
-        <div className="flex h-screen">
-            <aside className="w-64 bg-white shadow-md">
-                <div className="p-4">
-                    <div className="flex items-center">
-                        <img src="https://placehold.co/40x40" alt="Logo" className="mr-2" />
-                        <span className="text-lg font-bold text-red-600">ILP MOJOKERTO</span>
-                    </div>
-                </div>
-                <nav className="mt-6">
-                    <ul>
-                        <li className="px-4 py-2 text-blue-600 bg-gray-200 rounded-md">
-                            <i className="fas fa-tachometer-alt mr-2"></i> Dashboard Utama
-                        </li>
-                        <li className="px-4 py-2 mt-2 text-gray-600 hover:bg-gray-200 rounded-md">
-                            <i className="fas fa-heartbeat mr-2"></i> Dashboard Morbilitas
-                        </li>
-                        <li className="px-4 py-2 mt-2 text-gray-600 hover:bg-gray-200 rounded-md">
-                            <i className="fas fa-concierge-bell mr-2"></i> Dashboard Layanan
-                        </li>
-                    </ul>
-                </nav>
-                <div className="absolute bottom-0 w-full p-4">
-                    <button className="flex items-center text-red-600">
-                        <i className="fas fa-sign-out-alt mr-2"></i> Keluar
-                    </button>
-                </div>
-            </aside>
-            <main className="flex-1 p-6">
+        <div className="flex w-screen">
+                <SidebarDashboard/>
+
+            <main className="flex-1 p-6 headers">
+
                 <header className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Dashboard Utama</h1>
                     <div className="flex items-center">
@@ -78,7 +131,13 @@ function MainDashboard() {
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <h2 className="text-lg font-bold text-center text-green-600">JUMLAH PENDUDUK</h2>
                         <div className="flex justify-center my-4">
-                            <img src="https://placehold.co/100x100" alt="Pie chart showing population distribution" />
+                            {/*<img src="https://placehold.co/100x100" alt="Pie chart showing population distribution" />*/}
+                             <Chart 
+                                options={donutData.options} 
+                                series={donutData.seriesPenduduk} 
+                                type="donut" 
+                                width="280" 
+                            />
                         </div>
                         <div className="flex justify-around">
                             <div className="text-center">
@@ -95,7 +154,13 @@ function MainDashboard() {
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <h2 className="text-lg font-bold text-center text-pink-600">JUMLAH TERLAYANI</h2>
                         <div className="flex justify-center my-4">
-                            <img src="https://placehold.co/100x100" alt="Pie chart showing service distribution" />
+                                <Chart 
+                                options={donutData.options} 
+                                series={donutData.seriesTerlayani} 
+                                type="donut" 
+                                width="280" 
+                            />
+                            {/*<img src="https://placehold.co/100x100" alt="Pie chart showing service distribution" />*/}
                         </div>
                         <div className="flex justify-around">
                             <div className="text-center">
@@ -124,7 +189,14 @@ function MainDashboard() {
                         </select>
                     </div>
                     <div className="flex justify-center">
-                        <img src="https://placehold.co/600x300" alt="Bar chart showing service targets over months" />
+                        <Chart 
+                            options={barChartData.options} 
+                            series={barChartData.series} 
+                            type="bar" 
+                            height={350} 
+                            width={800}
+                        />
+                        {/*<img src="https://placehold.co/600x300" alt="Bar chart showing service targets over months" />*/}
                     </div>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow-md">

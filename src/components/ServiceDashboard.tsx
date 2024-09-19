@@ -1,36 +1,13 @@
 import { useState } from "react";
+import SidebarDashboard from './SidebarDashboard.tsx';
 
 function ServiceDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
 
+
     return (
         <div className="flex h-screen">
-            <aside className="w-64 bg-white shadow-md">
-                <div className="p-4 flex items-center">
-                    <img src="https://placehold.co/50x50" alt="Logo" className="mr-2"/>
-                    <h1 className="text-lg font-bold">ILP KOTA MOJOKERTO</h1>
-                </div>
-                <nav className="mt-10">
-                    <a href="#" className="flex items-center p-4 text-gray-600 hover:bg-gray-200">
-                        <i className="fas fa-tachometer-alt mr-3"></i>
-                        Dashboard Utama
-                    </a>
-                    <a href="#" className="flex items-center p-4 text-gray-600 hover:bg-gray-200">
-                        <i className="fas fa-heartbeat mr-3"></i>
-                        Dashboard Morbiditas
-                    </a>
-                    <a href="#" className="flex items-center p-4 text-white bg-blue-600">
-                        <i className="fas fa-chart-bar mr-3"></i>
-                        Dashboard Layanan
-                    </a>
-                </nav>
-                <div className="absolute bottom-0 w-full p-4">
-                    <a href="#" className="flex items-center text-red-600">
-                        <i className="fas fa-sign-out-alt mr-2"></i>
-                        Keluar
-                    </a>
-                </div>
-            </aside>
+            <SidebarDashboard/>
             <main className="flex-1 p-6 overflow-auto">
                 <header className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold">Dashboard Layanan</h2>

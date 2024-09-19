@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Base styles */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -10,7 +10,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #ffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -23,20 +23,67 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
+.headers {
+
+    justify-content: center;
+/**/
+}
+
 body {
   margin: 0;
-  display: flex;
+  flex-direction: column;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  min-width: 400px;
+  min-height: 200vh;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  body {
+    flex-direction: row;
+/*    justify-content: center;*/
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  button {
+    font-size: 1.1em;
+    padding: 0.7em 1.4em;
+  }
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3em;
+  }
+
+  button {
+    font-size: 1.2em;
+    padding: 0.8em 1.6em;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.2em;
+  }
+
+  button {
+    font-size: 1.3em;
+    padding: 0.9em 1.8em;
+  }
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2em;
   line-height: 1.1;
 }
 
@@ -51,22 +98,27 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Light mode styles */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
