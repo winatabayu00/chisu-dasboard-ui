@@ -1,11 +1,11 @@
 import {useState} from "react";
+import Chart from "react-apexcharts";
 import SidebarDashboard from '../components/SidebarDashboard.tsx'
 import SelectOption from '../components/field/SelectOption.tsx'
-// import DateRangeFilter from '../components/field/DateRangeFilter.tsx'
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx'
-import Chart from "react-apexcharts";
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import HeaderDashboard from "../components/HeaderDashboard.tsx";
+import FilterViewDashboard from "../components/layout/FilterViewDashboard.tsx";
 
 function ServiceDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
@@ -63,10 +63,10 @@ function ServiceDashboard() {
         }
     };
 
-    const [dateRange, setDateRange] = useState({ start: "", end: "" });
+    const [dateRange, setDateRange] = useState({start: "", end: ""});
 
     const handleDateChange = (start, end) => {
-        setDateRange({ start, end });
+        setDateRange({start, end});
     };
     return (
         <div className="flex w-screen">
@@ -74,16 +74,21 @@ function ServiceDashboard() {
 
             <main className="flex-1 p-6 headers">
 
-               <HeaderDashboard/>
+                <HeaderDashboard/>
 
                 <DateRangeFilter/>
 
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+
                 <OptionHeaderDashboard/>
+
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                 <Grid/>
 
                 <div className="bg-white p-4 rounded-lg shadow-md mb-6">
                     <div className="flex justify-between items-center mb-4">
+                        {/*<FilterViewDashboard/>*/}
                         <div className="flex items-center me-2">
                             <i className="fas fa-filter mr-2"></i>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>

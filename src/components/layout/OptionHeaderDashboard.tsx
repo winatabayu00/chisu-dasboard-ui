@@ -1,15 +1,55 @@
 import {useState} from "react";
 import SelectOption from '../field/SelectOption.tsx'
+import {Link, useLocation} from "react-router-dom";
 
 function OptionHeaderDashboard() {
+    const location = useLocation();
+    const gridCols = location.pathname === '/morbilitas-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
+
+
     return (
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
             <DistrictOption/>
             <SubDistrictOption/>
             <HealthCenterOption/>
             <GenderOption/>
+            <SasaranOption/>
         </div>
     );
+
+    function SasaranOption() {
+        const location = useLocation();  // Access location object
+        const [selected, setSelected] = useState("");
+
+        const options = [
+            { value: "", label: "Pilih Sasaran" },
+            { value: "sasaran1", label: "Sasaran 1" },
+            { value: "sasaran2", label: "Sasaran 2" },
+            { value: "sasaran3", label: "Sasaran 3" }
+        ];
+
+        const handleSelectChange = (value) => {
+            setSelected(value);
+            console.log("Selected:", value);
+        };
+
+        // Ensure to check the pathname, not the location object directly
+        if (location.pathname === '/morbilitas-dashboard') {
+            return (
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Sasaran</label>
+                    <SelectOption
+                        options={options}
+                        defaultValue=""
+                        onChange={(e) => handleSelectChange(e.target.value)}
+                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    />
+                </div>
+            );
+        }
+
+        return <div></div>;
+    }
 
     function DistrictOption() {
         const [selected, setSelected] = useState("");
@@ -34,7 +74,6 @@ function OptionHeaderDashboard() {
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <p>Selected Option: {selected}</p>
             </div>
         );
     }
@@ -61,7 +100,6 @@ function OptionHeaderDashboard() {
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <p>Selected Option: {selected}</p>
             </div>
         );
     }
@@ -90,7 +128,6 @@ function OptionHeaderDashboard() {
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <p>Selected Option: {selected}</p>
             </div>
         );
     }
@@ -118,7 +155,6 @@ function OptionHeaderDashboard() {
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <p>Selected Option: {selected}</p>
             </div>
         );
     }

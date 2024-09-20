@@ -27,8 +27,11 @@ function MorbiditasDashboard() {
 
                 <DateRangeFilter/>
 
-                {/* Filters Section */}
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+
                 <OptionHeaderDashboard/>
+
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                 {/* Dashboard Section */}
                 <div className="grid grid-cols-4 gap-4">

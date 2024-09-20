@@ -8,7 +8,7 @@ import HeaderDashboard from "../components/HeaderDashboard.tsx";
 function MainDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
 
-   // Data for Donut Charts
+    // Data for Donut Charts
     const donutData = {
         seriesPenduduk: [50, 50],  // Example data for male/female population
         seriesTerlayani: [45, 55], // Example data for male/female served
@@ -78,7 +78,7 @@ function MainDashboard() {
     };
     return (
         <div className="flex w-screen">
-                <SidebarDashboard/>
+            <SidebarDashboard/>
 
             <main className="flex-1 p-6 headers">
 
@@ -86,18 +86,22 @@ function MainDashboard() {
 
                 <DateRangeFilter/>
 
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+
                 <OptionHeaderDashboard/>
+
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <h2 className="text-lg font-bold text-center text-green-600">JUMLAH PENDUDUK</h2>
                         <div className="flex justify-center my-4">
                             {/*<img src="https://placehold.co/100x100" alt="Pie chart showing population distribution" />*/}
-                             <Chart 
-                                options={donutData.options} 
-                                series={donutData.seriesPenduduk} 
-                                type="donut" 
-                                width="280" 
+                            <Chart
+                                options={donutData.options}
+                                series={donutData.seriesPenduduk}
+                                type="donut"
+                                width="280"
                             />
                         </div>
                         <div className="flex justify-around">
@@ -115,11 +119,11 @@ function MainDashboard() {
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <h2 className="text-lg font-bold text-center text-pink-600">JUMLAH TERLAYANI</h2>
                         <div className="flex justify-center my-4">
-                                <Chart 
-                                options={donutData.options} 
-                                series={donutData.seriesTerlayani} 
-                                type="donut" 
-                                width="280" 
+                            <Chart
+                                options={donutData.options}
+                                series={donutData.seriesTerlayani}
+                                type="donut"
+                                width="280"
                             />
                             {/*<img src="https://placehold.co/100x100" alt="Pie chart showing service distribution" />*/}
                         </div>
@@ -145,16 +149,17 @@ function MainDashboard() {
                             <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
                             <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
                         </div>
-                        <select className="block w-48 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <select
+                            className="block w-48 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             <option>Semua Sasaran</option>
                         </select>
                     </div>
                     <div className="flex justify-center">
-                        <Chart 
-                            options={barChartData.options} 
-                            series={barChartData.series} 
-                            type="bar" 
-                            height={350} 
+                        <Chart
+                            options={barChartData.options}
+                            series={barChartData.series}
+                            type="bar"
+                            height={350}
                             width={800}
                         />
                         {/*<img src="https://placehold.co/600x300" alt="Bar chart showing service targets over months" />*/}
@@ -164,9 +169,15 @@ function MainDashboard() {
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-blue-600 text-white">
                         <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama Sasaran</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah Penduduk</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah Terlayani</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama
+                                Sasaran
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
+                                Penduduk
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
+                                Terlayani
+                            </th>
                         </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
