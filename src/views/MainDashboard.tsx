@@ -1,6 +1,9 @@
 import {useState} from "react";
 import SidebarDashboard from '../components/SidebarDashboard.tsx';
 import Chart from "react-apexcharts";
+import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx'
+import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
+import HeaderDashboard from "../components/HeaderDashboard.tsx";
 
 function MainDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
@@ -79,48 +82,12 @@ function MainDashboard() {
 
             <main className="flex-1 p-6 headers">
 
-                <header className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">Dashboard Utama</h1>
-                    <div className="flex items-center">
-                        <div className="mr-4">
-                            <label className="block text-sm font-medium text-gray-700">Range Tanggal</label>
-                            <input type="text" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" />
-                        </div>
-                        <div className="flex items-center">
-                            <img src="https://placehold.co/40x40" alt="User Avatar" className="w-10 h-10 rounded-full mr-2" />
-                            <div>
-                                <p className="text-sm font-medium text-gray-700">Zeenal Waluyo</p>
-                                <p className="text-xs text-gray-500">Administrator</p>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                <div className="grid grid-cols-4 gap-4 mb-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Kecamatan</label>
-                        <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option>Pilih Kecamatan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Puskesmas</label>
-                        <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option>Pilih Puskesmas</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Desa/Kelurahan</label>
-                        <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option>Pilih Desa/Kelurahan</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                        <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option>Semua Jenis Kelamin</option>
-                        </select>
-                    </div>
-                </div>
+                <HeaderDashboard/>
+
+                <DateRangeFilter/>
+
+                <OptionHeaderDashboard/>
+
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-white p-4 rounded-lg shadow-md">
                         <h2 className="text-lg font-bold text-center text-green-600">JUMLAH PENDUDUK</h2>

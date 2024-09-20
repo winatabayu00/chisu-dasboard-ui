@@ -1,9 +1,11 @@
 import {useState} from "react";
 import SidebarDashboard from '../components/SidebarDashboard.tsx'
 import SelectOption from '../components/field/SelectOption.tsx'
-import DateRangeFilter from '../components/field/DateRangeFilter.tsx'
+// import DateRangeFilter from '../components/field/DateRangeFilter.tsx'
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx'
 import Chart from "react-apexcharts";
+import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
+import HeaderDashboard from "../components/HeaderDashboard.tsx";
 
 function ServiceDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
@@ -72,48 +74,9 @@ function ServiceDashboard() {
 
             <main className="flex-1 p-6 headers">
 
-                <header className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">Dashboard Utama</h1>
-                    <div className="flex items-center">
+               <HeaderDashboard/>
 
-                        <div id="date-range-picker" date-rangepicker className="flex items-center">
-                            <div className="relative">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                    </svg>
-                                </div>
-                                <input id="datepicker-range-start" name="start" type="text"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="Select date start"/>
-                            </div>
-                            <span className="mx-4 text-gray-500">to</span>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                    </svg>
-                                </div>
-                                <input id="datepicker-range-end" name="end" type="text"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                       placeholder="Select date end"/>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center">
-                            <img src="https://placehold.co/40x40" alt="User Avatar"
-                                 className="w-10 h-10 rounded-full mr-2"/>
-                            <div>
-                                <p className="text-sm font-medium text-gray-700">Zeenal Waluyo</p>
-                                <p className="text-xs text-gray-500">Administrator</p>
-                            </div>
-                        </div>
-                    </div>
-                </header>t
+                <DateRangeFilter/>
 
                 <OptionHeaderDashboard/>
 
@@ -148,7 +111,7 @@ function ServiceDashboard() {
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-blue-600 text-white">
                         <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama
                                 Sasaran
                             </th>
                             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
@@ -253,7 +216,7 @@ function ServiceDashboard() {
             <div className="grid grid-cols-3 gap-1">
                 {data.map((item) => (
                     <div
-                        className={`p-6 bg-white border border-gray-200 rounded-lg shadow dark:${item.cardColor} dark:${item.cardColor}`}>
+                        className={`p-6 bg-white border border-gray-200 rounded-lg shadow ${item.cardColor} dark:${item.cardColor}`}>
 
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="20" cy="20" r="20" fill={`${item.svgColor}`}/>
