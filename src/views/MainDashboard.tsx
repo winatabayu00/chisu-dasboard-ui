@@ -1,13 +1,9 @@
 import {useState} from "react";
-import SidebarDashboard from './SidebarDashboard.tsx';
+import SidebarDashboard from '../components/SidebarDashboard.tsx';
 import Chart from "react-apexcharts";
-
-
 
 function MainDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
-
-
 
    // Data for Donut Charts
     const donutData = {
@@ -24,8 +20,6 @@ function MainDashboard() {
             },
         },
     };
-
-
 
     // Data for Bar Chart
     const barChartData = {

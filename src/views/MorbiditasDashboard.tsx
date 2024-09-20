@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SidebarDashboard from './SidebarDashboard.tsx';
+import SidebarDashboard from '../components/SidebarDashboard.tsx';
 
 function MorbiditasDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
