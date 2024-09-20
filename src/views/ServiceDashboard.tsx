@@ -92,9 +92,13 @@ function ServiceDashboard() {
                             <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
                             <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
                         </div>
-                        <SemuaSasaran/>
 
-                        <SemuaLayanan/>
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                            <SemuaSasaran/>
+
+                            <SemuaLayanan/>
+                        </div>
+
                     </div>
                     <div className="flex justify-center">
                         <Chart
@@ -106,43 +110,6 @@ function ServiceDashboard() {
                         />
                         {/*<img src="https://placehold.co/600x300" alt="Bar chart showing service targets over months" />*/}
                     </div>
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-md">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-blue-600 text-white">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama
-                                Sasaran
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
-                                Penduduk
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
-                                Terlayani
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                        {[
-                            'Ibu Hamil',
-                            'Ibu Bersalin/Nifas',
-                            'Bayi Baru Lahir',
-                            'Bayi (0-11 Bulan)',
-                            'Balita (1-4 Tahun)',
-                            'Anak Prasekolah (5-6 tahun)',
-                            'Anak Usia Sekolah (7-12 tahun)',
-                            'Remaja (10-17 tahun)',
-                            'Usia Dewasa (18-59 tahun)',
-                            'Lansia (60+)',
-                        ].map((target, index) => (
-                            <tr key={index}>
-                                <td className="px-6 py-4 whitespace-nowrap">{target}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">4.901.000</td>
-                                <td className="px-6 py-4 whitespace-nowrap">4.000.000</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
                 </div>
             </main>
         </div>
