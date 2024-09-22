@@ -32,13 +32,11 @@ const App: React.FC = () => {
                 <Sidebar/>
                 <div className="flex-1">
                     <Header title="My App Layout"/>
-                    <main className="p-4">
-                        <Routes>
-                            <Route path="/" element={<MainDashboard/>}/>
-                            <Route path="/morbiditas-dashboard" element={<MorbiditasDashboard/>}/>
-                            <Route path="/service-dashboard" element={<ServiceDashboard/>}/>
-                        </Routes>
-                    </main>
+                    <Routes>
+                        <Route path="/" element={<MainDashboard/>}/>
+                        <Route path="/morbiditas-dashboard" element={<MorbiditasDashboard/>}/>
+                        <Route path="/service-dashboard" element={<ServiceDashboard/>}/>
+                    </Routes>
                 </div>
             </div>
         </Router>

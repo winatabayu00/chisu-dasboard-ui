@@ -63,25 +63,23 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="p-4 sm:ml-64">
-            <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-                <div className="flex h-screen">
-                    <main className="flex-1 p-6">
-                        {/* Date range filter */}
-                        <DateRangeFilter />
+            <div className="flex h-screen">
+                <main className="flex-1 p-6">
+                    {/* Date range filter */}
+                    <DateRangeFilter />
 
-                        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                        {/* Options header */}
-                        <OptionHeaderDashboard />
+                    {/* Options header */}
+                    <OptionHeaderDashboard />
 
-                        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                        {/* ECharts Treemap Section */}
-                        <div className="w-full h-96">
-                            <div ref={chartRef} style={{ width: '100%', height: '100%' }}></div>
-                        </div>
-                    </main>
-                </div>
+                    {/* ECharts Treemap Section */}
+                    <div className="w-full h-96">
+                        <div ref={chartRef} style={{ width: '100%', height: '100%' }}></div>
+                    </div>
+                </main>
             </div>
         </div>
     );

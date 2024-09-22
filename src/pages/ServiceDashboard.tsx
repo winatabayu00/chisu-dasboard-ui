@@ -1,61 +1,17 @@
 import React, { useState } from "react";
-import Chart from "react-apexcharts";
-import SidebarDashboard from '../components/SidebarDashboard.tsx';
 import SelectOption from '../components/field/SelectOption.tsx';
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
-import HeaderDashboard from "../components/HeaderDashboard.tsx";
+import BarChart from "../components/BarChart.tsx";
 
 const ServiceDashboard: React.FC = () => {
     // Data for Bar Chart
     const barChartData = {
         series: [
-            {
-                name: 'Target',
-                data: [10, 25, 30, 40, 50]  // Example monthly targets
-            },
-            {
-                name: 'Terlayani',
-                data: [5, 20, 25, 35, 45]   // Example monthly actuals
-            }
+            {name: 'Target', data: [10, 25, 30, 40, 50]},
+            // {name: 'Terlayani', data: [5, 20, 25, 35, 45]}
         ],
-        options: {
-            chart: {
-                type: 'bar',
-                height: 350
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '55%',
-                    endingShape: 'rounded'
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                show: true,
-                width: 2,
-                colors: ['transparent']
-            },
-            xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-            },
-            yaxis: {
-                title: {
-                    text: 'Jumlah'
-                }
-            },
-            fill: {
-                opacity: 1
-            },
-            tooltip: {
-                y: {
-                    formatter: (val: number) => `${val} layanan`
-                }
-            }
-        }
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
     };
 
     const [dateRange, setDateRange] = useState({ start: "", end: "" });
@@ -65,76 +21,61 @@ const ServiceDashboard: React.FC = () => {
     };
 
     return (
-
         <div className="p-4 sm:ml-64">
-            <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-                <div className="flex h-screen">
-                    <main className="flex-1 p-6">
-                        <DateRangeFilter/>
+            <div className="flex h-screen">
+                <main className="flex-1 p-6">
+                    <DateRangeFilter/>
 
-                        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
 
-                        <OptionHeaderDashboard/>
+                    <OptionHeaderDashboard/>
 
-                        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
 
-                        <Grid/>
+                    <Grid/>
 
-                        <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                            <div className="flex justify-between items-center mb-4">
-                                <div className="flex items-center me-2">
-                                    <i className="fas fa-filter mr-2"></i>
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <SemuaSasaran />
-                                    <SemuaLayanan />
-                                </div>
+                    <div className="bg-white p-4 rounded-lg shadow-md mb-6 mt-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="flex items-center me-2">
+                                <i className="fas fa-filter mr-2"></i>
+                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
                             </div>
-                            <div className="flex justify-center">
-                                <Chart
-                                    options={barChartData.options}
-                                    series={barChartData.series}
-                                    type="bar"
-                                    height={350}
-                                    width={800}
-                                />
+
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <SemuaSasaran />
+                                <SemuaLayanan />
                             </div>
                         </div>
+                        <div className="flex justify-center">
+                            <BarChart series={barChartData.series} categories={barChartData.categories}/>
+                        </div>
+                    </div>
 
-                        <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                            <div className="flex justify-between items-center mb-4">
-                                <div className="flex items-center me-2">
-                                    <i className="fas fa-filter mr-2"></i>
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
-                                    <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <SemuaSasaran />
-                                    <SemuaLayanan />
-                                </div>
+                    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="flex items-center me-2">
+                                <i className="fas fa-filter mr-2"></i>
+                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
                             </div>
-                            <div className="flex justify-center">
-                                <Chart
-                                    options={barChartData.options}
-                                    series={barChartData.series}
-                                    type="bar"
-                                    height={350}
-                                    width={800}
-                                />
+
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <SemuaSasaran />
+                                <SemuaLayanan />
                             </div>
                         </div>
-                    </main>
-                </div>
+                        <div className="flex justify-center">
+                            <BarChart series={barChartData.series} categories={barChartData.categories}/>
+                        </div>
+                    </div>
+                </main>
             </div>
         </div>
     );
@@ -162,7 +103,7 @@ const ServiceDashboard: React.FC = () => {
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <p>Selected Option: {selected}</p>
+                
             </div>
         );
     }
@@ -190,7 +131,7 @@ const ServiceDashboard: React.FC = () => {
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-                <p>Selected Option: {selected}</p>
+                
             </div>
         );
     }

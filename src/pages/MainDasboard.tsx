@@ -1,234 +1,167 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
-import Chart from "react-apexcharts";
+import DonutChart from "../components/DonutChart";
+import BarChart from "../components/BarChart";
+import TableComponent from "../components/TableComponent";
+import SelectOption from "../components/field/SelectOption.tsx";
 
+const Dashboard: React.FC = () => {
+    const donutData = {
+        seriesPenduduk: [50, 50],
+        seriesTerlayani: [45, 55],
+    };
 
-// Data for Donut Charts
-const donutData = {
-    seriesPenduduk: [50, 50],  // Example data for male/female population
-    seriesTerlayani: [45, 55], // Example data for male/female served
-    options: {
-        chart: {
-            type: 'donut',
-        },
-        labels: ['Laki-Laki', 'Wanita'],
-        colors: ['#00E396', '#F4607A'],
-        legend: {
-            position: 'bottom',
-        },
-    },
-};
+    const barChartData = {
+        series: [
+            {name: 'Target', data: [10, 25, 30, 40, 50]},
+            // {name: 'Terlayani', data: [5, 20, 25, 35, 45]}
+        ],
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    };
 
-// Data for Bar Chart
-const barChartData = {
-    series: [
-        {
-            name: 'Target',
-            data: [10, 25, 30, 40, 50]  // Example monthly targets
-        },
-        {
-            name: 'Terlayani',
-            data: [5, 20, 25, 35, 45]   // Example monthly actuals
-        }
-    ],
-    options: {
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '55%',
-                endingShape: 'rounded'
-            }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
-        },
-        xaxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-        },
-        yaxis: {
-            title: {
-                text: 'Jumlah'
-            }
-        },
-        fill: {
-            opacity: 1
-        },
-        tooltip: {
-            y: {
-                formatter: function (val: number) {
-                    return `${val} layanan`;
-                }
-            }
-        }
+    const tableData = [
+        {name: 'Ibu Hamil', population: 4901000, served: 4000000},
+        {name: 'Ibu Bersalin/Nifas', population: 4901000, served: 4000000},
+        // Add more data as needed
+    ];
+
+    function SemuaSasaran() {
+        const [selected, setSelected] = useState("");
+        const options = [
+            {value: "", label: "Semua Sasaran"},
+            {value: "sasaran1", label: "Sasaran 1"},
+            {value: "sasaran2", label: "Sasaran 2"},
+            {value: "sasaran3", label: "Sasaran 3"}
+        ];
+
+        const handleSelectChange = (value: string) => {
+            setSelected(value);
+            console.log("Selected:", value);
+        };
+
+        return (
+            <div>
+                <h1>Pilih Sasaran</h1>
+                <SelectOption
+                    options={options}
+                    defaultValue=""
+                    onChange={handleSelectChange}
+                    className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                />
+
+            </div>
+        );
     }
-};
 
-const Dashboard: React.FC = () => (
-    <div className="p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    function SemuaLayanan() {
+        const [selected, setSelected] = useState("");
+        const options = [
+            {value: "", label: "Semua Layanan"},
+            {value: "layanan1", label: "Layanan 1"},
+            {value: "layanan2", label: "Layanan 2"},
+            {value: "layanan3", label: "Layanan 3"}
+        ];
+
+        const handleSelectChange = (value: string) => {
+            setSelected(value);
+            console.log("Selected:", value);
+        };
+
+        return (
+            <div>
+                <h1>Pilih Layanan</h1>
+                <SelectOption
+                    options={options}
+                    defaultValue=""
+                    onChange={handleSelectChange}
+                    className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                />
+
+            </div>
+        );
+    }
+
+    return (
+        <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6 headers">
 
                     <DateRangeFilter/>
 
-                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                     <OptionHeaderDashboard/>
 
-                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
 
+                    {/* Charts */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
-                        <div className="bg-white p-4 rounded-lg shadow-md">
-                            <h2 className="text-lg font-bold text-center text-green-600">JUMLAH PENDUDUK</h2>
-                            <div className="flex justify-center my-4">
-                                {/*<img src="https://placehold.co/100x100" alt="Pie chart showing population distribution" />*/}
-                                <Chart
-                                    options={donutData.options}
-                                    series={donutData.seriesPenduduk}
-                                    type="donut"
-                                    width="280"
-                                />
-                            </div>
-                            <div className="flex justify-around">
-                                <div className="text-center">
-                                    <p className="text-green-600"><i className="fas fa-male"></i> Laki-Laki</p>
-                                    <p>130.000.000 (50%)</p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-pink-600"><i className="fas fa-female"></i> Wanita</p>
-                                    <p>130.000.000 (50%)</p>
-                                </div>
-                            </div>
-                            <p className="text-center mt-4">Total: 6.000.000</p>
-                        </div>
-                        <div className="bg-white p-4 rounded-lg shadow-md">
-                            <h2 className="text-lg font-bold text-center text-pink-600">JUMLAH TERLAYANI</h2>
-                            <div className="flex justify-center my-4">
-                                <Chart
-                                    options={donutData.options}
-                                    series={donutData.seriesTerlayani}
-                                    type="donut"
-                                    width="280"
-                                />
-                                {/*<img src="https://placehold.co/100x100" alt="Pie chart showing service distribution" />*/}
-                            </div>
-                            <div className="flex justify-around">
-                                <div className="text-center">
-                                    <p className="text-green-600"><i className="fas fa-male"></i> Laki-Laki</p>
-                                    <p>130.000.000 (50%)</p>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-pink-600"><i className="fas fa-female"></i> Wanita</p>
-                                    <p>130.000.000 (50%)</p>
-                                </div>
-                            </div>
-                            <p className="text-center mt-4">Total: 6.000.000</p>
-                        </div>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                        <div className="flex justify-between items-center mb-4">
-                            <div className="flex items-center">
-                                <i className="fas fa-filter mr-2"></i>
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif
-                                </button>
-                            </div>
-                            <select
-                                className="block w-48 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                <option>Semua Sasaran</option>
-                            </select>
-                        </div>
-                        <div className="flex justify-center">
-                            <Chart
-                                options={barChartData.options}
-                                series={barChartData.series}
-                                type="bar"
-                                height={350}
-                                width={800}
-                            />
-                            {/*<img src="https://placehold.co/600x300" alt="Bar chart showing service targets over months" />*/}
-                        </div>
+                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC"/>
+                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4"/>
                     </div>
 
                     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
                         <div className="flex justify-between items-center mb-4">
-                            <div className="flex items-center">
+                            <div className="flex items-center me-2">
                                 <i className="fas fa-filter mr-2"></i>
                                 <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan
+                                </button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut
+                                </button>
                                 <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif
                                 </button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase
+                                </button>
                             </div>
-                            <select
-                                className="block w-48 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                                <option>Semua Sasaran</option>
-                            </select>
+
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <SemuaSasaran/>
+                                <SemuaLayanan/>
+                            </div>
                         </div>
                         <div className="flex justify-center">
-                            <Chart
-                                options={barChartData.options}
-                                series={barChartData.series}
-                                type="bar"
-                                height={350}
-                                width={800}
-                            />
-                            {/*<img src="https://placehold.co/600x300" alt="Bar chart showing service targets over months" />*/}
+                            <BarChart series={barChartData.series} categories={barChartData.categories}/>
+
                         </div>
                     </div>
-                    <div className="bg-white p-4 rounded-lg shadow-md">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-blue-600 text-white">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama
-                                    Sasaran
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
-                                    Penduduk
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
-                                    Terlayani
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                            {[
-                                'Ibu Hamil',
-                                'Ibu Bersalin/Nifas',
-                                'Bayi Baru Lahir',
-                                'Bayi (0-11 Bulan)',
-                                'Balita (1-4 Tahun)',
-                                'Anak Prasekolah (5-6 tahun)',
-                                'Anak Usia Sekolah (7-12 tahun)',
-                                'Remaja (10-17 tahun)',
-                                'Usia Dewasa (18-59 tahun)',
-                                'Lansia (60+)',
-                            ].map((target, index) => (
-                                <tr key={index}>
-                                    <td className="px-6 py-4 whitespace-nowrap">{target}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">4.901.000</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">4.000.000</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
+
+
+                    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="flex items-center me-2">
+                                <i className="fas fa-filter mr-2"></i>
+                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan
+                                </button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut
+                                </button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif
+                                </button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <SemuaSasaran/>
+                                <SemuaLayanan/>
+                            </div>
+                        </div>
+                        <div className="flex justify-center">
+                            <BarChart series={barChartData.series} categories={barChartData.categories}/>
+
+                        </div>
                     </div>
+
+
+                    {/* Table */}
+                    <TableComponent data={tableData}/>
+
                 </main>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 export default Dashboard;

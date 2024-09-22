@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import SidebarDashboard from '../components/SidebarDashboard.tsx';
 import SelectOption from '../components/field/SelectOption.tsx';
 
@@ -26,7 +26,7 @@ function MainDashboard() {
     };
 
 
-     const pieDataLayani = {
+    const pieDataLayani = {
         seriesPenduduk: [50, 50],  // Example data for male/female population
         seriesTerlayani: [45, 55], // Example data for male/female served
         options: {
@@ -96,21 +96,21 @@ function MainDashboard() {
 
     return (
         <div className="flex w-screen">
-            <SidebarDashboard />
+            <SidebarDashboard/>
 
             <main className="flex-1 p-6 headers">
-                <HeaderDashboard />
+                <HeaderDashboard/>
 
-                <DateRangeFilter />
+                <DateRangeFilter/>
 
-                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
-                <OptionHeaderDashboard />
+                <OptionHeaderDashboard/>
 
-                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                 {/* Row with 4 cards displaying total data */}
-{/*                <div className="grid grid-cols-3 gap-4 mb-6">
+                {/*                <div className="grid grid-cols-3 gap-4 mb-6">
                     <div style={{ backgroundColor: '#FFE2E5' }} className="p-4 rounded-lg shadow-md text-white">
 
                         <img src={icon_statistik} alt="icon" style={{ width: '45px', height: '45px' }} className="inline-block mr-2 h-6 w-6" />
@@ -133,9 +133,10 @@ function MainDashboard() {
 */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-white p-4 rounded-lg shadow-md">
-                    <h2 style={{ backgroundColor: '#78F5C0' }} className="text-lg font-bold text-center text-black-600 py-2 rounded-t-lg">
-                        JUMLAH PENDUDUK
-                    </h2>
+                        <h2 style={{backgroundColor: '#78F5C0'}}
+                            className="text-lg font-bold text-center text-black-600 py-2 rounded-t-lg">
+                            JUMLAH PENDUDUK
+                        </h2>
                         {/*<h2 style={{backgroundColor: '#78F5C0'}} className="text-lg font-bold text-center text-black-600">JUMLAH PENDUDUK</h2>*/}
                         <div className="flex justify-center my-4">
                             <Chart
@@ -146,15 +147,22 @@ function MainDashboard() {
                             />
                         </div>
                         <div className="flex justify-around">
-                                <div className="flex justify-center items-center">
-                                    <div className="text-center" style={{ backgroundColor: '#1A8D5C', padding: '10px', width: '65px', height: '10px' }}>
-                                    </div>
-                                    <p className="text-center ml-4 mt-0">Total: 260.000.000</p>
+                            <div className="flex justify-center items-center">
+                                <div className="text-center" style={{
+                                    backgroundColor: '#1A8D5C',
+                                    padding: '10px',
+                                    width: '65px',
+                                    height: '10px'
+                                }}>
                                 </div>
+                                <p className="text-center ml-4 mt-0">Total: 260.000.000</p>
+                            </div>
                         </div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-md">
-                        <h2 style={{ backgroundColor: '#FFC7C7' }} className="text-lg font-bold text-center text-black-600 py-2 rounded-t-lg">JUMLAH TERLAYANI</h2>
+                        <h2 style={{backgroundColor: '#FFC7C7'}}
+                            className="text-lg font-bold text-center text-black-600 py-2 rounded-t-lg">JUMLAH
+                            TERLAYANI</h2>
                         <div className="flex justify-center my-4">
                             <Chart
                                 options={pieDataLayani.options}
@@ -164,21 +172,26 @@ function MainDashboard() {
                             />
                         </div>
                         <div className="flex justify-around">
-                                <div className="flex justify-center items-center">
-                                    <div className="text-center" style={{ backgroundColor: '#FF6262', padding: '10px', width: '65px', height: '10px' }}>
-                                    </div>
-                                    <p className="text-center ml-4 mt-0">Total: 260.000.000</p>
+                            <div className="flex justify-center items-center">
+                                <div className="text-center" style={{
+                                    backgroundColor: '#FF6262',
+                                    padding: '10px',
+                                    width: '65px',
+                                    height: '10px'
+                                }}>
                                 </div>
+                                <p className="text-center ml-4 mt-0">Total: 260.000.000</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                            
+
                     <div style={{paddingLeft: "180px"}} className="flex justify-between items-center mb-4">
                         {/*<FilterViewDashboard/>*/}
 
-                        
+
                         <div className="flex items-center me-2">
                             <i className="fas fa-filter mr-2"></i>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
@@ -189,7 +202,7 @@ function MainDashboard() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 items-right mb-6">
-                            <SemuaSasaran />
+                            <SemuaSasaran/>
 
                             {/*<SemuaLayanan/>*/}
                         </div>
@@ -213,9 +226,15 @@ function MainDashboard() {
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-blue-600 text-white">
                         <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama Sasaran</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah Penduduk</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah Terlayani</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama
+                                Sasaran
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
+                                Penduduk
+                            </th>
+                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah
+                                Terlayani
+                            </th>
                         </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
