@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev-docker": "vite --host 0.0.0.0",
     "build": "vite build",
     "lint": "eslint . --max-warnings=0",
     "preview": "vite preview"
@@ -17,6 +18,7 @@
     "echarts-for-react": "^3.0.2",
     "flatpickr": "^4.6.13",
     "flowbite": "^2.5.1",
+    "flowbite-react": "^0.10.1",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.4",

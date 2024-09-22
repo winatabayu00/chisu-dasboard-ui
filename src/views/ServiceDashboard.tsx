@@ -5,10 +5,8 @@ import SelectOption from '../components/field/SelectOption.tsx'
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx'
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import HeaderDashboard from "../components/HeaderDashboard.tsx";
-import FilterViewDashboard from "../components/layout/FilterViewDashboard.tsx";
 
 function ServiceDashboard() {
-    const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
 
     // Data for Bar Chart
     const barChartData = {
