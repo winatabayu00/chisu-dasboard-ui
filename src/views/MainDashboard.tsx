@@ -6,7 +6,7 @@ import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import HeaderDashboard from "../components/HeaderDashboard.tsx";
 
 function MainDashboard() {
-    const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
+    // const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
 
     // Data for Donut Charts
     const donutData = {
