@@ -22,7 +22,7 @@ const DateRangeFilter = ({ defaultStartDate = '01/01/2024', defaultEndDate = '01
     }, [defaultStartDate, defaultEndDate]);
 
     return (
-        <div id="date-range-picker" className="flex items-center justify-content-center">
+        <div id="date-range-picker" className="flex items-center justify-end">
             <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Periode</label>
                 <div className="relative">
