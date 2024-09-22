@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "apexcharts": "^3.53.0",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "echarts": "^5.5.1",
+    "echarts-for-react": "^3.0.2",
+    "flatpickr": "^4.6.13",
     "flowbite": "^2.5.1",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",

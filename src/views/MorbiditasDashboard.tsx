@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import * as echarts from 'echarts';
 import SidebarDashboard from '../components/SidebarDashboard.tsx';
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
@@ -8,39 +9,80 @@ function MorbiditasDashboard() {
     const [selectedDate, setSelectedDate] = useState('01/01/2024 - 01/01/2024');
     const [startDate, setStartDate] = useState('01/01/2024');
     const [endDate, setEndDate] = useState('01/01/2024');
-
+    
+    // Data for the treemap
     const data = [
-        { id: 1, text: 'Diseases of the circulatory system', value: '3.000.000', color: 'bg-teal-500' },
-        { id: 2, text: 'Diseases of the respiratory system', value: '3.000.000', color: 'bg-teal-400' },
-        { id: 3, text: 'Diseases of the digestive system', value: '3.000.000', color: 'bg-teal-300' },
-        { id: 4, text: 'Diseases of the musculoskeletal system', value: '3.000.000', color: 'bg-teal-200' },
-        { id: 5, text: 'Endocrine, nutritional and metabolic diseases', value: '3.000.000', color: 'bg-teal-100' },
-        { id: 6, text: 'Symptom and abnormal clinical findings', value: '3.000.000', color: 'bg-teal-50' },
+        { name: 'Diseases of the circulatory system', value: 3000000 },
+        { name: 'Diseases of the respiratory system', value: 3000000 },
+        { name: 'Diseases of the digestive system', value: 3000000 },
+        { name: 'Diseases of the musculoskeletal system', value: 3000000 },
+        { name: 'Endocrine, nutritional and metabolic diseases', value: 3000000 },
+        { name: 'Symptom and abnormal clinical findings', value: 3000000 },
     ];
+
+    const chartRef = useRef(null);
+
+    useEffect(() => {
+        const chartInstance = echarts.init(chartRef.current);
+        
+        const option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c}'
+            },
+            series: [
+                {
+                    type: 'treemap',
+                    data: data,
+                    label: {
+                        show: true,
+                        formatter: '{b}\n{c}',
+                        fontSize: 14,
+                        color: '#fff',
+                    },
+                    itemStyle: {
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                        gapWidth: 2,
+                    },
+                    levels: [
+                        {
+                            itemStyle: {
+                                borderColor: '#fff',
+                                borderWidth: 2,
+                                gapWidth: 2,
+                            },
+                        },
+                    ],
+                },
+            ],
+        };
+
+        chartInstance.setOption(option);
+
+        return () => {
+            chartInstance.dispose();
+        };
+    }, []);
 
     return (
         <div className="flex h-screen">
             <SidebarDashboard />
             <main className="flex-1 p-6">
                 {/* Header Section */}
-                <HeaderDashboard/>
+                <HeaderDashboard />
 
-                <DateRangeFilter/>
+                <DateRangeFilter />
 
-                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                <OptionHeaderDashboard/>
+                <OptionHeaderDashboard />
 
-                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                {/* Dashboard Section */}
-                <div className="grid grid-cols-4 gap-4">
-                    {data.map((item) => (
-                        <div key={item.id} className={`p-4 text-white ${item.color} rounded-lg shadow-md`}>
-                            <div className="text-sm font-semibold">#{item.id}. {item.text}</div>
-                            <div className="text-lg font-bold">{item.value}</div>
-                        </div>
-                    ))}
+                {/* ECharts Treemap Section */}
+                <div className="w-full h-96">
+                    <div ref={chartRef} style={{ width: '100%', height: '100%' }}></div>
                 </div>
             </main>
         </div>
