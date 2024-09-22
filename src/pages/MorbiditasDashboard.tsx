@@ -68,12 +68,12 @@ const Dashboard: React.FC = () => {
                     {/* Date range filter */}
                     <DateRangeFilter />
 
-                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
                     {/* Options header */}
                     <OptionHeaderDashboard />
 
-                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
                     {/* ECharts Treemap Section */}
                     <div className="w-full h-96">
