@@ -31,7 +31,7 @@ const App: React.FC = () => {
             <div className="flex">
                 <Sidebar/>
                 <div className="flex-1">
-                    <Header title="My App Layout"/>
+                    <Header title="Dashboard Utama"/>
                     <Routes>
                         <Route path="/" element={<MainDashboard/>}/>
                         <Route path="/morbiditas-dashboard" element={<MorbiditasDashboard/>}/>
