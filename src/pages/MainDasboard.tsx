@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
 import DonutChart from "../components/DonutChart";
 import BarChart from "../components/BarChart";
 import TableComponent from "../components/TableComponent";
 import SelectOption from "../components/field/SelectOption.tsx";
+import axios from "axios";
 
 const Dashboard: React.FC = () => {
     const donutData = {
@@ -27,15 +28,30 @@ const Dashboard: React.FC = () => {
     ];
 
     function SemuaSasaran() {
-        const [selected, setSelected] = useState("");
-        const options = [
-            {value: "", label: "Semua Sasaran"},
-            {value: "sasaran1", label: "Sasaran 1"},
-            {value: "sasaran2", label: "Sasaran 2"},
-            {value: "sasaran3", label: "Sasaran 3"}
-        ];
+        const [, setSelected] = useState("");
+        const [options, setOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
 
-        const handleSelectChange = (value: string) => {
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get('http://chisu-core.me/api/select-option/targets');
+                    const data = response.data.payload.data;
+
+                    const mappedOptions = data.map(item => ({
+                        value: item.id,
+                        label: item.name
+                    }));
+
+                    setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            };
+
+            fetchData();
+        }, []);
+
+        const handleSelectChange = (value) => {
             setSelected(value);
             console.log("Selected:", value);
         };
@@ -46,28 +62,41 @@ const Dashboard: React.FC = () => {
                 <SelectOption
                     options={options}
                     defaultValue=""
-                    onChange={handleSelectChange}
+                    onChange={(e) => handleSelectChange(e.target.value)}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
-
             </div>
         );
     }
 
     function SemuaLayanan() {
-        const [selected, setSelected] = useState("");
-        const options = [
-            {value: "", label: "Semua Layanan"},
-            {value: "layanan1", label: "Layanan 1"},
-            {value: "layanan2", label: "Layanan 2"},
-            {value: "layanan3", label: "Layanan 3"}
-        ];
+        const [, setSelected] = useState("");
+        const [options, setOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
 
-        const handleSelectChange = (value: string) => {
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get('http://chisu-core.me/api/select-option/services');
+                    const data = response.data.payload.data;
+
+                    const mappedOptions = data.map(item => ({
+                        value: item.id,
+                        label: item.name
+                    }));
+
+                    setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            };
+
+            fetchData();
+        }, []);
+
+        const handleSelectChange = (value) => {
             setSelected(value);
             console.log("Selected:", value);
         };
-
         return (
             <div>
                 <h1>Pilih Layanan</h1>
