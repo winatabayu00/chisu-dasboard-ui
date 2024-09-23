@@ -14,13 +14,7 @@ const ServiceDashboard: React.FC = () => {
         ],
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
     };
-
-    const [dateRange, setDateRange] = useState({ start: "", end: "" });
-
-    const handleDateChange = (start: string, end: string) => {
-        setDateRange({ start, end });
-    };
-
+    
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
