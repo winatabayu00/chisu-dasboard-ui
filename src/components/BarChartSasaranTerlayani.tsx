@@ -6,7 +6,7 @@ interface BarChartProps {
     categories: string[];
 }
 
-const BarChart: React.FC<BarChartProps> = ({ series, categories }) => (
+const BarChartSasaranTerlayani: React.FC<BarChartProps> = ({ series, categories }) => (
     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
         <div className="flex justify-center">
             <Chart
@@ -20,7 +20,7 @@ const BarChart: React.FC<BarChartProps> = ({ series, categories }) => (
                         bar: { horizontal: false, columnWidth: '55%', endingShape: 'rounded' }
                     },
                     xaxis: { categories },
-                    
+                    colors: ['#A77FE9'], // Warna kustom
                     yaxis: { title: { text: 'Jumlah' } },
                     tooltip: {
                         y: { formatter: (val: number) => `${val} layanan` }
@@ -31,4 +31,4 @@ const BarChart: React.FC<BarChartProps> = ({ series, categories }) => (
     </div>
 );
 
-export default BarChart;
+export default BarChartSasaranTerlayani;

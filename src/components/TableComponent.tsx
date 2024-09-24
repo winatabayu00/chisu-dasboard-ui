@@ -17,9 +17,9 @@ const TableComponent: React.FC<TableComponentProps> = ({ data }) => (
             <tbody className="bg-white divide-y divide-gray-200">
             {data.map((target, index) => (
                 <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap">{target.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{target.population}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{target.served}</td>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{color:"black"}}>{target.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{color:"black"}}>{target.population}</td>
+                    <td className="px-6 py-4 whitespace-nowrap" style={{color:"black"}}>{target.served}</td>
                 </tr>
             ))}
             </tbody>

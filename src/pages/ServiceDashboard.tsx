@@ -3,6 +3,8 @@ import SelectOption from '../components/field/SelectOption.tsx';
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import BarChart from "../components/BarChart.tsx";
+import { apiUrl } from "../helpers/helpers";
+
 import axios from "axios";
 
 const ServiceDashboard: React.FC = () => {
@@ -75,14 +77,18 @@ const ServiceDashboard: React.FC = () => {
         </div>
     );
 
-    function SemuaSasaran() {
+      function SemuaSasaran() {
         const [, setSelected] = useState("");
         const [options, setOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
 
         useEffect(() => {
             const fetchData = async () => {
+
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/targets');
+                    const url = apiUrl('targets'); // Pass the API endpoint
+
+
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -124,7 +130,10 @@ const ServiceDashboard: React.FC = () => {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/services');
+                       const url = apiUrl('targets'); // Pass the API endpoint
+
+
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SelectOption from '../field/SelectOption.tsx'
 import { useLocation } from "react-router-dom";
+import { apiUrl } from "../../helpers/helpers";
 import axios from 'axios';
 
 function OptionHeaderDashboard() {
@@ -24,7 +25,11 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/targets');
+
+                    const url = apiUrl('targets'); // Pass the API endpoint
+
+
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -70,7 +75,8 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/districts');
+                    const url = apiUrl('districts'); // Pass the API endpoint
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -112,7 +118,9 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/sub-districts');
+
+                       const url = apiUrl('sub-districts'); // Pass the API endpoint
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -154,7 +162,8 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/health-centers');
+                       const url = apiUrl('health-centers'); // Pass the API endpoint
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -196,7 +205,9 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/genders');
+                        const url = apiUrl('genders'); // Pass the API endpoint
+                    const response = await axios.get(url);
+                    // const response = await axios.get('http://chisu-core.me/api/select-option/');
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
