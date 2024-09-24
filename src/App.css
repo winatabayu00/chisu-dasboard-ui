@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+td { 
+
+  color: black;
+ }
+
 
 .logo {
   height: 6em;
@@ -17,6 +22,11 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* In your CSS file */
+.mt-45 {
+    margin-top: 45px;
 }
 
 @keyframes logo-spin {

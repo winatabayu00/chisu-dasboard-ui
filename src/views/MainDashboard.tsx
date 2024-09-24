@@ -186,7 +186,7 @@ function MainDashboard() {
                     </div>
                 </div>
 
-                <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+                <div className="bg-white p-4 rounded-lg shadow-md mb-6 ">
 
                     <div style={{paddingLeft: "180px"}} className="flex justify-between items-center mb-4">
                         {/*<FilterViewDashboard/>*/}
@@ -251,9 +251,9 @@ function MainDashboard() {
                             'Lansia (60+)',
                         ].map((target, index) => (
                             <tr key={index}>
-                                <td className="px-6 py-4 whitespace-nowrap">{target}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">4.901.000</td>
-                                <td className="px-6 py-4 whitespace-nowrap">4.000.000</td>
+                                <td className="px-6 py-4 whitespace-nowrap" style={{ color: 'black' }}> {target}</td>
+                                <td className="px-6 py-4 whitespace-nowrap"> Tetst</td>
+                                <td className="px-6 py-4 whitespace-nowrap test">4.000.000</td>
                             </tr>
                         ))}
                         </tbody>
@@ -284,7 +284,6 @@ function MainDashboard() {
                 <SelectOption
                     options={options}
                     defaultValue=""
-
                     onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />

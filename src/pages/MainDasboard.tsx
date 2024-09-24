@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
+import { apiUrl } from "../helpers/helpers";
+
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
 import DonutChart from "../components/DonutChart";
 import BarChart from "../components/BarChart";
@@ -33,8 +35,12 @@ const Dashboard: React.FC = () => {
 
         useEffect(() => {
             const fetchData = async () => {
+
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/targets');
+                    const url = apiUrl('targets'); // Pass the API endpoint
+
+
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -76,7 +82,10 @@ const Dashboard: React.FC = () => {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get('http://chisu-core.me/api/select-option/services');
+                       const url = apiUrl('targets'); // Pass the API endpoint
+
+
+                    const response = await axios.get(url);
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
