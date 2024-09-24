@@ -26,7 +26,7 @@ function OptionHeaderDashboard() {
             const fetchData = async () => {
                 try {
 
-                    const url = apiUrl('targets'); // Pass the API endpoint
+                    const url = apiUrl('/select-option/targets'); // Pass the API endpoint
 
 
                     const response = await axios.get(url);
@@ -39,7 +39,6 @@ function OptionHeaderDashboard() {
 
                     setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -48,7 +47,6 @@ function OptionHeaderDashboard() {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         if (location.pathname === '/morbiditas-dashboard') {
@@ -75,7 +73,7 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const url = apiUrl('districts'); // Pass the API endpoint
+                    const url = apiUrl('/select-option/districts'); // Pass the API endpoint
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -86,7 +84,6 @@ function OptionHeaderDashboard() {
 
                     setOptions([{ value: "", label: "Pilih Kecamatan" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -95,7 +92,6 @@ function OptionHeaderDashboard() {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         return (
@@ -119,7 +115,7 @@ function OptionHeaderDashboard() {
             const fetchData = async () => {
                 try {
 
-                       const url = apiUrl('sub-districts'); // Pass the API endpoint
+                       const url = apiUrl('/select-option/sub-districts'); // Pass the API endpoint
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -130,7 +126,6 @@ function OptionHeaderDashboard() {
 
                     setOptions([{ value: "", label: "Pilih Desa / Kelurahan" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -139,7 +134,6 @@ function OptionHeaderDashboard() {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         return (
@@ -162,7 +156,7 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                       const url = apiUrl('health-centers'); // Pass the API endpoint
+                       const url = apiUrl('/select-option/health-centers'); // Pass the API endpoint
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -173,7 +167,6 @@ function OptionHeaderDashboard() {
 
                     setOptions([{ value: "", label: "Pilih Puskesmas" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -182,7 +175,6 @@ function OptionHeaderDashboard() {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         return (
@@ -200,12 +192,12 @@ function OptionHeaderDashboard() {
 
     function GenderOption() {
         const [, setSelected] = useState("");
-        const [options, setOptions] = useState([{ value: "", label: "Pilih Puskesmas" }]);
+            const [options, setOptions] = useState([{ value: "", label: "Pilih Jenis Kelamin" }]);
 
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                        const url = apiUrl('genders'); // Pass the API endpoint
+                        const url = apiUrl('/select-option/genders'); // Pass the API endpoint
                     const response = await axios.get(url);
                     // const response = await axios.get('http://chisu-core.me/api/select-option/');
                     const data = response.data.payload.data;
@@ -215,9 +207,8 @@ function OptionHeaderDashboard() {
                         label: item.name
                     }));
 
-                    setOptions([{ value: "", label: "Pilih Puskesmas" }, ...mappedOptions]);
+                    setOptions([{ value: "", label: "Pilih Jenis Kelamin" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -226,7 +217,6 @@ function OptionHeaderDashboard() {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         return (

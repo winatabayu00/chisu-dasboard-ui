@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
             const fetchData = async () => {
 
                 try {
-                    const url = apiUrl('targets'); // Pass the API endpoint
+                    const url = apiUrl('/select-option/targets'); // Pass the API endpoint
 
 
                     const response = await axios.get(url);
@@ -50,7 +50,6 @@ const Dashboard: React.FC = () => {
 
                     setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -59,7 +58,6 @@ const Dashboard: React.FC = () => {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         return (
@@ -82,7 +80,7 @@ const Dashboard: React.FC = () => {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                       const url = apiUrl('targets'); // Pass the API endpoint
+                       const url = apiUrl('/select-option/targets'); // Pass the API endpoint
 
 
                     const response = await axios.get(url);
@@ -95,7 +93,6 @@ const Dashboard: React.FC = () => {
 
                     setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
                 } catch (error) {
-                    console.error("Error fetching data:", error);
                 }
             };
 
@@ -104,7 +101,6 @@ const Dashboard: React.FC = () => {
 
         const handleSelectChange = (value) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
         return (
             <div>
@@ -156,7 +152,7 @@ const Dashboard: React.FC = () => {
 
                             <div className="grid grid-cols-2 gap-4 mb-6">
                                 <SemuaSasaran/>
-                                <SemuaLayanan/>
+                                {/*<SemuaLayanan/>*/}
                             </div>
                         </div>
                         <div className="flex justify-center">
@@ -183,7 +179,6 @@ const Dashboard: React.FC = () => {
 
                             <div className="grid grid-cols-2 gap-4 mb-6">
                                 <SemuaSasaran/>
-                                <SemuaLayanan/>
                             </div>
                         </div>
                         <div className="flex justify-center">

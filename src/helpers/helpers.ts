@@ -1,7 +1,6 @@
 export const apiUrl = (endpoint: string): string => {
     const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-    console.log("baseUrl", baseUrl);
     if (!baseUrl) {
         throw new Error('REACT_APP_API_URL is not defined');
     }

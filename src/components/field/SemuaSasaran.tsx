@@ -1,5 +1,7 @@
+import SelectOption from "./SelectOption.tsx";
+import {useState} from "react";
 
-    function SemuaSasaran() {
+function SemuaSasaran() {
         const [selected, setSelected] = useState("");
         const options = [
             {value: "", label: "Semua Sasaran"},
@@ -10,7 +12,6 @@
 
         const handleSelectChange = (value: string) => {
             setSelected(value);
-            console.log("Selected:", value);
         };
 
         return (

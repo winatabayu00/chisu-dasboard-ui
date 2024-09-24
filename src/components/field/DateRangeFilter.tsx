@@ -11,7 +11,6 @@ const DateRangeFilter = ({ defaultStartDate = '01/01/2024', defaultEndDate = '01
             mode: "range",
             defaultDate: [defaultStartDate, defaultEndDate],
             onChange: (selectedDates, dateStr) => {
-                console.log("Date range selected: ", dateStr); // Logs both start and end dates
             },
         });
 
