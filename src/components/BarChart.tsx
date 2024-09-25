@@ -4,9 +4,10 @@ import Chart from 'react-apexcharts';
 interface BarChartProps {
     series: { name: string; data: number[] }[];
     categories: string[];
+    colors: string;
 }
 
-const BarChart: React.FC<BarChartProps> = ({ series, categories }) => (
+const BarChart: React.FC<BarChartProps> = ({ series, categories, colors }) => (
     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
         <div className="flex justify-center">
             <Chart
@@ -24,7 +25,8 @@ const BarChart: React.FC<BarChartProps> = ({ series, categories }) => (
                     yaxis: { title: { text: 'Jumlah' } },
                     tooltip: {
                         y: { formatter: (val: number) => `${val} layanan` }
-                    }
+                    },
+                    colors: [colors],
                 }}
             />
         </div>

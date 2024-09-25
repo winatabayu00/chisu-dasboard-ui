@@ -7,16 +7,67 @@ import { apiUrl } from "../helpers/helpers";
 import axios from "axios";
 
 const ServiceDashboard: React.FC = () => {
-    const barChartData = {
-        series: [{ name: 'Target', data: [10, 25, 30, 40, 50] }],
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    };
+    const [barChartData, setBarChartData] = useState({
+        series: [{ name: 'Target', data: [] }],
+        categories: [],
+    });
+
+    const [barChartDataPuskesmas, setBarChartDataPuskesmas] = useState({
+        series: [{ name: 'Target', data: [] }],
+        categories: [],
+    });
 
     const [selectedSasaran, setSelectedSasaran] = useState("");
 
     const handleSasaranChange = (sasaran: string) => {
         setSelectedSasaran(sasaran);
     };
+
+    useEffect(() => {
+        const fetchBarChartDataPuskesmas = async () => {
+            try {
+                const url = apiUrl('/data/sasaran-puskesmas-terlayani');
+                const response = await axios.get(url);
+                const result = response.data;
+
+                if (result.rc === 'SUCCESS') {
+                    const data = result.payload.data;
+                    const counts = data.map((item: { count: number }) => item.count);
+                    const name = data.map((item: { name: string }) => item.name);
+
+                    setBarChartDataPuskesmas({
+                        series: [{ name: 'Target', data: counts }],
+                        categories: name,
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching bar chart data:', error);
+            }
+        };
+
+        const fetchBarChartData = async () => {
+            try {
+                const url = apiUrl('/data/sasaran-terlayani');
+                const response = await axios.get(url);
+                const result = response.data;
+
+                if (result.rc === 'SUCCESS') {
+                    const data = result.payload.data;
+                    const counts = data.map((item: { count: number }) => item.count);
+                    const months = data.map((item: { month: string }) => item.month);
+
+                    setBarChartData({
+                        series: [{ name: 'Target', data: counts }],
+                        categories: months,
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching bar chart data:', error);
+            }
+        };
+        fetchBarChartDataPuskesmas();
+        fetchBarChartData();
+    }, []);
 
     return (
         <div className="p-4 sm:ml-64">
@@ -35,14 +86,14 @@ const ServiceDashboard: React.FC = () => {
                     <div className="bg-white p-4 rounded-lg shadow-md mb-6 mt-6">
                         <FilterSection />
                         <div className="flex justify-center">
-                            <BarChart series={barChartData.series} categories={barChartData.categories} />
+                            <BarChart series={barChartData.series} categories={barChartData.categories} colors="#47BDF9" />
                         </div>
                     </div>
 
                     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
                         <FilterSection />
                         <div className="flex justify-center">
-                            <BarChart series={barChartData.series} categories={barChartData.categories} />
+                            <BarChart series={barChartDataPuskesmas.series} categories={barChartDataPuskesmas.categories} colors="#A77FE9" />
                         </div>
                     </div>
                 </main>

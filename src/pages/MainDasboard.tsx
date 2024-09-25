@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import { apiUrl } from "../helpers/helpers";
-
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
 import DonutChart from "../components/DonutChart";
 import BarChart from "../components/BarChart";
@@ -10,24 +9,66 @@ import SelectOption from "../components/field/SelectOption.tsx";
 import axios from "axios";
 
 const Dashboard: React.FC = () => {
-    const donutData = {
-        seriesPenduduk: [50, 50],
-        seriesTerlayani: [45, 55],
-    };
+    const [donutData, setDonutData] = useState({
+        seriesPenduduk: [0, 0],
+        seriesTerlayani: [0, 0],
+    });
 
-    const barChartData = {
-        series: [
-            {name: 'Target', data: [10, 25, 30, 40, 50]},
-            // {name: 'Terlayani', data: [5, 20, 25, 35, 45]}
-        ],
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    };
+    const [barChartData, setBarChartData] = useState({
+        series: [{ name: 'Target', data: [] }],
+        categories: [],
+    });
 
     const tableData = [
-        {name: 'Ibu Hamil', population: 4901000, served: 4000000},
-        {name: 'Ibu Bersalin/Nifas', population: 4901000, served: 4000000},
-        // Add more data as needed
+        { name: 'Ibu Hamil', population: 4901000, served: 4000000 },
+        { name: 'Ibu Bersalin/Nifas', population: 4901000, served: 4000000 },
     ];
+
+    useEffect(() => {
+        const fetchDonutData = async () => {
+            try {
+                const url = apiUrl('/data/peoples');
+                const response = await axios.get(url);
+                const result = response.data;
+
+                if (result.rc === 'SUCCESS') {
+                    const { male: malePenduduk, female: femalePenduduk } = result.payload.data.series_penduduk;
+                    const { male: maleTerlayani, female: femaleTerlayani } = result.payload.data.series_terlayani;
+
+                    setDonutData({
+                        seriesPenduduk: [malePenduduk, femalePenduduk],
+                        seriesTerlayani: [maleTerlayani, femaleTerlayani],
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching donut data:', error);
+            }
+        };
+
+        const fetchBarChartData = async () => {
+            try {
+                const url = apiUrl('/data/sasaran-terlayani');
+                const response = await axios.get(url);
+                const result = response.data;
+
+                if (result.rc === 'SUCCESS') {
+                    const data = result.payload.data;
+                    const counts = data.map((item: { count: number }) => item.count);
+                    const months = data.map((item: { month: string }) => item.month);
+
+                    setBarChartData({
+                        series: [{ name: 'Target', data: counts }],
+                        categories: months,
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching bar chart data:', error);
+            }
+        };
+
+        fetchDonutData();
+        fetchBarChartData();
+    }, []);
 
     function SemuaSasaran() {
         const [, setSelected] = useState("");
@@ -35,11 +76,8 @@ const Dashboard: React.FC = () => {
 
         useEffect(() => {
             const fetchData = async () => {
-
                 try {
-                    const url = apiUrl('/select-option/targets'); // Pass the API endpoint
-
-
+                    const url = apiUrl('/select-option/targets');
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -50,6 +88,7 @@ const Dashboard: React.FC = () => {
 
                     setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
                 } catch (error) {
+                    console.error('Error fetching options:', error);
                 }
             };
 
@@ -73,66 +112,23 @@ const Dashboard: React.FC = () => {
         );
     }
 
-    function SemuaLayanan() {
-        const [, setSelected] = useState("");
-        const [options, setOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
-
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                       const url = apiUrl('/select-option/targets'); // Pass the API endpoint
-
-
-                    const response = await axios.get(url);
-                    const data = response.data.payload.data;
-
-                    const mappedOptions = data.map(item => ({
-                        value: item.id,
-                        label: item.name
-                    }));
-
-                    setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
-                } catch (error) {
-                }
-            };
-
-            fetchData();
-        }, []);
-
-        const handleSelectChange = (value) => {
-            setSelected(value);
-        };
-        return (
-            <div>
-                <h1>Pilih Layanan</h1>
-                <SelectOption
-                    options={options}
-                    defaultValue=""
-                    onChange={handleSelectChange}
-                    className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-
-            </div>
-        );
-    }
-
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6 headers">
 
-                    <DateRangeFilter/>
+                    <DateRangeFilter />
 
-                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                    <OptionHeaderDashboard/>
+                    <OptionHeaderDashboard />
 
-                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
                     {/* Charts */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
-                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC"/>
-                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4"/>
+                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
+                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
                     </div>
 
                     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
@@ -140,56 +136,23 @@ const Dashboard: React.FC = () => {
                             <div className="flex items-center me-2">
                                 <i className="fas fa-filter mr-2"></i>
                                 <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan
-                                </button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut
-                                </button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif
-                                </button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase
-                                </button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
+                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 mb-6">
-                                <SemuaSasaran/>
-                                {/*<SemuaLayanan/>*/}
+                                <SemuaSasaran />
                             </div>
                         </div>
                         <div className="flex justify-center">
-                            <BarChart series={barChartData.series} categories={barChartData.categories}/>
-
+                            <BarChart series={barChartData.series} categories={barChartData.categories} colors="#47BDF9" />
                         </div>
                     </div>
-
-
-                    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                        <div className="flex justify-between items-center mb-4">
-                            <div className="flex items-center me-2">
-                                <i className="fas fa-filter mr-2"></i>
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan
-                                </button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut
-                                </button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif
-                                </button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase
-                                </button>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4 mb-6">
-                                <SemuaSasaran/>
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <BarChart series={barChartData.series} categories={barChartData.categories}/>
-
-                        </div>
-                    </div>
-
 
                     {/* Table */}
-                    <TableComponent data={tableData}/>
+                    <TableComponent data={tableData} />
 
                 </main>
             </div>
