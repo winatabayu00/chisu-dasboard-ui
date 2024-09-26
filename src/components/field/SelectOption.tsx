@@ -1,33 +1,44 @@
-import {useState} from "react";
+import { useState } from "react";
 
-const SelectOption = ({options, onChange, defaultValue, className}) => {
-    const [selectedOption, setSelectedOption] = useState(defaultValue || "");
+// Interface for props
+interface SelectOptionParams {
+  options: { value: string; label: string }[];  
+  defaultValue?: string;  
+  onChange: (value: string) => void; 
+  className?: string;  
+}
 
-    const handleSelectChange = (e) => {
-        const value = e.target.value;
-        setSelectedOption(value);
-        if (onChange) {
-            onChange(value); // Pass the selected value to parent component
-        }
-    };
+// Functional component definition with typed props
+const SelectOption: React.FC<SelectOptionParams> = ({ options, onChange, defaultValue = "", className }) => {
+  const [selectedOption, setSelectedOption] = useState<string>(defaultValue);
 
-    return (
-        <select
-            value={selectedOption}
-            onChange={handleSelectChange}
-            className={className}
-        >
-            {options && options.length > 0 ? (
-                options.map((option, index) => (
-                    <option key={index} value={option.value}>
-                        {option.label}
-                    </option>
-                ))
-            ) : (
-                <option value="">No options available</option>
-            )}
-        </select>
-    );
+  // Event handler for select change
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedOption(value);
+    if (onChange) {
+      onChange(value);  // Pass the selected value to parent component
+    }
+  };
+
+  // console.log("Selected Value ", selectedOption);
+  return (
+    <select
+      value={selectedOption}
+      onChange={handleSelectChange}
+      className={className}
+    >
+      {options && options.length > 0 ? (
+        options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))
+      ) : (
+        <option value="">No options available</option>
+      )}
+    </select>
+  );
 };
 
 export default SelectOption;

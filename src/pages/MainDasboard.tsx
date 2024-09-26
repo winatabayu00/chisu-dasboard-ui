@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import { apiUrl } from "../helpers/helpers";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
+import FilteredBarChart from "../components/FilteredBarChart";
 import DonutChart from "../components/DonutChart";
 import BarChart from "../components/BarChart";
 import TableComponent from "../components/TableComponent";
@@ -9,6 +10,10 @@ import SelectOption from "../components/field/SelectOption.tsx";
 import axios from "axios";
 
 const Dashboard: React.FC = () => {
+    // Example start and end dates to pass to DateRangeFilter
+    const [startDate, setStartDate] = useState('01/01/2024');
+    const [endDate, setEndDate] = useState('01/31/2024');
+
     const [donutData, setDonutData] = useState({
         seriesPenduduk: [0, 0],
         seriesTerlayani: [0, 0],
@@ -116,8 +121,9 @@ const Dashboard: React.FC = () => {
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6 headers">
-
-                    <DateRangeFilter />
+                    
+                    {/* Pass startDate and endDate to DateRangeFilter */}
+                    <DateRangeFilter defaultStartDate={startDate} defaultEndDate={endDate} />
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
@@ -130,7 +136,7 @@ const Dashboard: React.FC = () => {
                         <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
                         <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
                     </div>
-
+{/*
                     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
                         <div className="flex justify-between items-center mb-4">
                             <div className="flex items-center me-2">
@@ -149,7 +155,12 @@ const Dashboard: React.FC = () => {
                         <div className="flex justify-center">
                             <BarChart series={barChartData.series} categories={barChartData.categories} colors="#47BDF9" />
                         </div>
-                    </div>
+                    </div>*/}
+
+                    {/*Filter Bar Chart*/}
+
+                           {/* Filtered Bar Chart */}
+                    <FilteredBarChart />
 
                     {/* Table */}
                     <TableComponent data={tableData} />
