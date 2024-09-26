@@ -17,7 +17,8 @@ const FilteredBarChart: React.FC = () => {
         colors: "#47BDF9",
     });
 
-    const [filter, setFilter] = useState('Mingguan');
+    const [filterDate, setFilterDate] = useState('Mingguan');
+    const [filter, setFilter] = useState('Absolut');
     const [sasaran, setSasaran] = useState('');
     const [sasaranOptions, setSasaranOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
 
@@ -64,8 +65,12 @@ const FilteredBarChart: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchBarChartData(filter, sasaran);
-    }, [filter, sasaran]);
+        fetchBarChartData(filterDate, filter, sasaran);
+    }, [filterDate, filter, sasaran]);
+
+    const handleFilterChangeDate = (selectedFilter: string) => {
+        setFilterDate(selectedFilter);
+    };
 
     const handleFilterChange = (selectedFilter: string) => {
         setFilter(selectedFilter);
@@ -77,35 +82,46 @@ const FilteredBarChart: React.FC = () => {
 
     return (
         <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-center items-center mb-4">
                 <div className="flex items-center me-2">
                     <i className="fas fa-filter mr-2"></i>
                     <button
-                        className={`px-4 py-2 rounded-md ${filter === 'Mingguan' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                        onClick={() => handleFilterChange('Mingguan')}
+                        className={`px-4 py-2 rounded-md ${filterDate === 'Mingguan' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterChangeDate('Mingguan')}
                     >
                         Mingguan
                     </button>
+
                     <button
-                        className={`ml-2 px-4 py-2 rounded-md ${filter === 'Bulanan' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                        onClick={() => handleFilterChange('Bulanan')}
+                        className={`px-4 py-2 rounded-md ${filterDate === 'Bulanan' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterChangeDate('Bulanan')}
                     >
                         Bulanan
                     </button>
                     <button
-                        className={`ml-2 px-4 py-2 rounded-md ${filter === 'Tahunan' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                        onClick={() => handleFilterChange('Tahunan')}
+                        className={`px-4 py-2 rounded-md ${filterDate === 'Tahunan' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterChangeDate('Tahunan')}
                     >
                         Tahunan
                     </button>
+                </div>
+
+                <div className="flex items-center me-2">
+                    <i className="fas fa-filter mr-2"></i>
                     <button
-                        className={`ml-2 px-4 py-2 rounded-md ${filter === 'Kumulatif' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        className={`px-4 py-2 rounded-md ${filter === 'Absolut' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterChange('Absolut')}
+                    >
+                        Absolut
+                    </button>
+                    <button
+                        className={`px-4 py-2 rounded-md ${filter === 'Kumulatif' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChange('Kumulatif')}
                     >
                         Kumulatif
                     </button>
                     <button
-                        className={`ml-2 px-4 py-2 rounded-md ${filter === 'Persentase' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        className={`px-4 py-2 rounded-md ${filter === 'Persentase' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChange('Persentase')}
                     >
                         Persentase
@@ -117,13 +133,14 @@ const FilteredBarChart: React.FC = () => {
                         options={sasaranOptions}
                         defaultValue=""
                         onChange={(e) => handleSasaranChange(e.target.value)}
-                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        className="mt-6 bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     />
                 </div>
             </div>
 
             <div className="flex justify-center">
-                <BarChart series={barChartData.series} categories={barChartData.categories} colors={barChartData.colors} />
+                <BarChart series={barChartData.series} categories={barChartData.categories}
+                          colors={barChartData.colors}/>
             </div>
         </div>
     );

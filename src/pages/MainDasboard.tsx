@@ -4,7 +4,6 @@ import { apiUrl } from "../helpers/helpers";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
 import FilteredBarChart from "../components/FilteredBarChart";
 import DonutChart from "../components/DonutChart";
-import BarChart from "../components/BarChart";
 import TableComponent from "../components/TableComponent";
 import SelectOption from "../components/field/SelectOption.tsx";
 import axios from "axios";

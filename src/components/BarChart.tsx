@@ -14,7 +14,7 @@ const BarChart: React.FC<BarChartProps> = ({ series, categories, colors }) => (
                 series={series}
                 type="bar"
                 height={350}
-                width={800}
+                width={1500}
                 options={{
                     chart: { type: 'bar', height: 350 },
                     plotOptions: {
