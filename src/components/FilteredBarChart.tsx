@@ -3,6 +3,8 @@ import BarChart from '../components/BarChart';
 import SelectOption from '../components/field/SelectOption';
 import axios from 'axios';
 import { apiUrl } from '../helpers/helpers';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
 
 interface BarChartProps {
     series: { name: string; data: number[] }[];
@@ -10,7 +12,15 @@ interface BarChartProps {
     colors: string;
 }
 
-const FilteredBarChart: React.FC = () => {
+
+// Define the interface for props
+interface DateRangeFilterProps {
+  defaultStartDate?: string;
+  defaultEndDate?: string;
+}
+
+
+const FilteredBarChart: React.FC<DateRangeFilterProps> = ({ defaultStartDate , defaultEndDate }) => {
     const [barChartData, setBarChartData] = useState<BarChartProps>({
         series: [{ name: 'Target', data: [] }],
         categories: [],
@@ -67,8 +77,11 @@ const FilteredBarChart: React.FC = () => {
     }, [sasaran]);
 
     const fetchBarChartData = async (selectedFilter: string, selectedSasaran: string, selectedLayanan: string) => {
+        console.log("defaultStartDate", defaultStartDate);
+        console.log("defaultEndDate", defaultEndDate);
+
         try {
-            const url = apiUrl(`/data/sasaran-terlayani?filter=${selectedFilter}&sasaran=${selectedSasaran}&layanan=${selectedLayanan}`);
+            const url = apiUrl(`/data/sasaran-terlayani?period[type]=${selectedFilter}&period[start]=${defaultStartDate}&period[end]=${defaultEndDate}&aggregate=${selectedSasaran}&indicator=${selectedLayanan}`);
             const response = await axios.get(url);
             const result = response.data;
 
