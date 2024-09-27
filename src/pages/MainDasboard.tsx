@@ -159,7 +159,7 @@ const Dashboard: React.FC = () => {
                     {/*Filter Bar Chart*/}
 
                            {/* Filtered Bar Chart */}
-                    <FilteredBarChart />
+                    <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate} defaultEndDate={endDate} barChartColor="#47BDF9"/>
 
                     {/* Table */}
                     <TableComponent data={tableData} />

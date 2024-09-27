@@ -5,8 +5,12 @@ import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import BarChart from "../components/BarChart.tsx";
 import { apiUrl } from "../helpers/helpers";
 import axios from "axios";
+import FilteredBarChart from "../components/FilteredBarChart.tsx";
 
 const ServiceDashboard: React.FC = () => {
+
+    const [startDate, setStartDate] = useState('01/01/2024');
+    const [endDate, setEndDate] = useState('01/31/2024');
     const [barChartData, setBarChartData] = useState({
         series: [{ name: 'Target', data: [] }],
         categories: [],
@@ -83,19 +87,16 @@ const ServiceDashboard: React.FC = () => {
 
                     <Grid />
 
-                    <div className="bg-white p-4 rounded-lg shadow-md mb-6 mt-6">
-                        <FilterSection />
-                        <div className="flex justify-center">
-                            <BarChart series={barChartData.series} categories={barChartData.categories} colors="#47BDF9" />
-                        </div>
-                    </div>
+                    <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate} defaultEndDate={endDate} barChartColor="#47BDF9"/>
 
-                    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                        <FilterSection />
-                        <div className="flex justify-center">
-                            <BarChart series={barChartDataPuskesmas.series} categories={barChartDataPuskesmas.categories} colors="#A77FE9" />
-                        </div>
-                    </div>
+                    <FilteredBarChart prefix="/data/sasaran-puskesmas-terlayani" defaultStartDate={startDate} defaultEndDate={endDate} barChartColor="#A77FE9"/>
+
+                    {/*<div className="bg-white p-4 rounded-lg shadow-md mb-6">*/}
+                    {/*    <FilterSection />*/}
+                    {/*    <div className="flex justify-center">*/}
+                    {/*        <BarChart series={barChartDataPuskesmas.series} categories={barChartDataPuskesmas.categories} colors="#A77FE9" />*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </main>
             </div>
         </div>
