@@ -21,7 +21,12 @@ interface DateRangeFilterProps {
 }
 
 
-const FilteredBarChart: React.FC<DateRangeFilterProps> = ({prefix, defaultStartDate, defaultEndDate, barChartColor}) => {
+const FilteredBarChart: React.FC<DateRangeFilterProps> = ({
+                                                              prefix,
+                                                              defaultStartDate,
+                                                              defaultEndDate,
+                                                              barChartColor
+                                                          }) => {
     const [barChartData, setBarChartData] = useState<BarChartProps>({
         series: [{name: 'Target', data: []}],
         categories: [],
@@ -79,9 +84,6 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({prefix, defaultStartD
     }, [selected]);
 
     const fetchBarChartData = async (filterDate: string, selectedFilter: string, selectedSasaran: string, selectedLayanan: string) => {
-        console.log("defaultStartDate", defaultStartDate);
-        console.log("defaultEndDate", defaultEndDate);
-
         try {
             const url = apiUrl(`${prefix}?period[type]=${filterDate}&period[start]=${defaultStartDate}&period[end]=${defaultEndDate}&aggregate=${selectedFilter}&target=${selectedSasaran}&indicator=${selectedLayanan}`);
             const response = await axios.get(url);
@@ -95,7 +97,7 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({prefix, defaultStartD
                 setBarChartData({
                     series: [{name: 'Target', data: counts}],
                     categories: categories,
-                    colors: "#47BDF9",
+                    colors: barChartData.colors,
                 });
             }
         } catch (error) {
@@ -104,7 +106,10 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({prefix, defaultStartD
     };
 
     useEffect(() => {
-        fetchBarChartData(filterDate, filter, selected, layanan);
+        if (selected && layanan) {
+            // Fetch data only if selected and layanan are not null
+            fetchBarChartData(filterDate, filter, selected, layanan);
+        }
     }, [filterDate, filter, selected, layanan]);
 
     const handleFilterChange = (selectedFilter: string) => {

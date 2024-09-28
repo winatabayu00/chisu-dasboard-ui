@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import SelectOption from '../components/field/SelectOption.tsx';
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
-import BarChart from "../components/BarChart.tsx";
 import { apiUrl } from "../helpers/helpers";
 import axios from "axios";
 import FilteredBarChart from "../components/FilteredBarChart.tsx";
@@ -73,11 +72,23 @@ const ServiceDashboard: React.FC = () => {
         fetchBarChartData();
     }, []);
 
+    const handleDateChange = (start: string, end: string) => {
+        setStartDate(start);
+        setEndDate(end);
+        console.log('Start Date:', start);
+        console.log('End Date:', end);
+        // Fetch data or do other operations here based on the new dates
+    };
+
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6">
-                    <DateRangeFilter />
+                    <DateRangeFilter
+                        defaultStartDate={startDate}
+                        defaultEndDate={endDate}
+                        onDateChange={handleDateChange}
+                    />
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
