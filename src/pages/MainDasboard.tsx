@@ -10,8 +10,8 @@ import axios from "axios";
 
 const Dashboard: React.FC = () => {
     // Example start and end dates to pass to DateRangeFilter
-    const [startDate, setStartDate] = useState('01/01/2024');
-    const [endDate, setEndDate] = useState('01/31/2024');
+    const [startDate] = useState('01/01/2024');
+    const [endDate] = useState('01/31/2024');
 
     const [donutData, setDonutData] = useState({
         seriesPenduduk: [0, 0],
