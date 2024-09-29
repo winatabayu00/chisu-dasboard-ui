@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
                         <li>
 
                             <NavLink
-                                to="/"
+                                to="/dilp/"
                                 className={({ isActive }) =>
                                     `flex items-center p-2 rounded-lg group ${
                                         isActive ? 'bg-[#122B4C] text-white' : 'text-gray-500'
@@ -71,7 +71,7 @@ const Sidebar: React.FC = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="/morbiditas-dashboard"
+                                to="/dilp/morbiditas-dashboard"
                                 className={({ isActive }) =>
                                     `flex items-center p-2 rounded-lg group ${
                                         isActive ? 'bg-[#122B4C] text-white' : 'text-gray-500'
@@ -88,7 +88,7 @@ const Sidebar: React.FC = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="/service-dashboard"
+                                to="/dilp/service-dashboard"
                                 className={({ isActive }) =>
                                     `flex items-center p-2 rounded-lg group ${
                                         isActive ? 'bg-[#122B4C] text-white' : 'text-gray-500'

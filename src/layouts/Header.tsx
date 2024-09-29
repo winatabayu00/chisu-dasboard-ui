@@ -13,8 +13,8 @@ const Header: React.FC<HeaderProps> = ({ title }) => (
                     <span className="font-bold">KH</span>
                 </div>
                 <div>
-                    <p className="text-[#00B065] font-bold">Karna Habibi</p>
-                    <p className="text-[#0F172A]">Administrator</p>
+                    {/*<p className="text-[#00B065] font-bold">Karna Habibi</p>*/}
+                    {/*<p className="text-[#0F172A]">Administrator</p>*/}
                 </div>
             </div>
         </div>

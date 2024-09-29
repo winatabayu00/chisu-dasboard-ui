@@ -33,9 +33,9 @@ const App: React.FC = () => {
                 <div className="flex-1">
                     <Header title="Dashboard Utama"/>
                     <Routes>
-                        <Route path="/" element={<MainDashboard/>}/>
-                        <Route path="/morbiditas-dashboard" element={<MorbiditasDashboard/>}/>
-                        <Route path="/service-dashboard" element={<ServiceDashboard/>}/>
+                        <Route path="/dilp/" element={<MainDashboard/>}/>
+                        <Route path="/dilp/morbiditas-dashboard" element={<MorbiditasDashboard/>}/>
+                        <Route path="/dilp/service-dashboard" element={<ServiceDashboard/>}/>
                     </Routes>
                 </div>
             </div>
