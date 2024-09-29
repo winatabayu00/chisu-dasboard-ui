@@ -134,6 +134,7 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({
                 <div className="flex items-center me-2">
                     <i className="fas fa-filter mr-2"></i>
                     <button
+                        disabled="true"
                         className={`px-4 py-2 rounded-md ${filterDate === 'weekly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChangeDate('weekly')}
                     >
@@ -147,6 +148,7 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({
                         monthly
                     </button>
                     <button
+                        disabled="true"
                         className={`px-4 py-2 rounded-md ${filterDate === 'yearly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChangeDate('yearly')}
                     >
