@@ -10,8 +10,8 @@ import axios from "axios";
 
 const Dashboard: React.FC = () => {
     // Example start and end dates to pass to DateRangeFilter
-    const [startDate] = useState('01/01/2024');
-    const [endDate] = useState('01/31/2024');
+    const [startDate, setStartDate] = useState('01/01/2024');
+    const [endDate, setEndDate] = useState('01/31/2024');
 
     const [donutData, setDonutData] = useState({
         seriesPenduduk: [0, 0],
@@ -116,13 +116,25 @@ const Dashboard: React.FC = () => {
         );
     }
 
+    const handleDateChange = (start: string, end: string) => {
+        setStartDate(start);
+        setEndDate(end);
+        console.log('Start Date:', start);
+        console.log('End Date:', end);
+        // Fetch data or do other operations here based on the new dates
+    };
+
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6 headers">
                     
                     {/* Pass startDate and endDate to DateRangeFilter */}
-                    <DateRangeFilter defaultStartDate={startDate} defaultEndDate={endDate} />
+                    <DateRangeFilter
+                        defaultStartDate={startDate}
+                        defaultEndDate={endDate}
+                        onDateChange={handleDateChange}
+                    />
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
