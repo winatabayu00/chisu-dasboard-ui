@@ -115,15 +115,15 @@ const ServiceDashboard: React.FC = () => {
 
     function Grid() {
         const data = [
-            { text: 'Total Sasaran', value: '0', svgColor: '#FA5A7D', cardColor: 'bg-[#FFE2E5]' },
-            { text: 'Total Sasaran Terlayani', value: '0', svgColor: '#FF947A', cardColor: 'bg-[#FFF4DE]' },
-            { text: 'Total Kunjungan', value: '0', svgColor: '#4CB77E', cardColor: 'bg-[#E5FFF1]' },
+            { text: 'Total Sasaran', value: '0', svgColor: '#FA5A7D', cardColor: '#FFE2E5' },
+            { text: 'Total Sasaran Terlayani', value: '0', svgColor: '#FF947A', cardColor: '#FFF4DE' },
+            { text: 'Total Kunjungan', value: '0', svgColor: '#4CB77E', cardColor: '#E5FFF1' },
         ];
 
         return (
-            <div className="grid grid-cols-3 gap-1">
+            <div className="grid grid-cols-3 gap-1 mb-5">
                 {data.map((item, index) => (
-                    <div key={index} className={`p-6 bg-white border border-gray-200 rounded-lg shadow ${item.cardColor}`}>
+                    <div key={index} className={`p-6 bg-white border border-gray-200 rounded-lg shadow`} style={{backgroundColor: `${item.cardColor}`}}>
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="20" cy="20" r="20" fill={item.svgColor} />
                             <path

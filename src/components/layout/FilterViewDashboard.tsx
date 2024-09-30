@@ -4,7 +4,7 @@ import {useLocation} from "react-router-dom";
 
 function FilterViewDashboard() {
     const location = useLocation();
-    const gridCols = location.pathname === '/morbilitas-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
+    const gridCols = location.pathname === '/dilp/morbiditas-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
 
 
     return (

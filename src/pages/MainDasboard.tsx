@@ -128,7 +128,16 @@ const Dashboard: React.FC = () => {
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6 headers">
-                    
+
+                    {/* Charts */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
+                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
+                    </div>
+
+                    {/* Table */}
+                    <TableComponent data={tableData} />
+
                     {/* Pass startDate and endDate to DateRangeFilter */}
                     <DateRangeFilter
                         defaultStartDate={startDate}
@@ -142,11 +151,7 @@ const Dashboard: React.FC = () => {
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                    {/* Charts */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
-                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
-                    </div>
+
 {/*
                     <div className="bg-white p-4 rounded-lg shadow-md mb-6">
                         <div className="flex justify-between items-center mb-4">
@@ -172,9 +177,6 @@ const Dashboard: React.FC = () => {
 
                            {/* Filtered Bar Chart */}
                     <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate} defaultEndDate={endDate} barChartColor="#47BDF9"/>
-
-                    {/* Table */}
-                    <TableComponent data={tableData} />
 
                 </main>
             </div>
