@@ -7,8 +7,8 @@ interface BarChartProps {
     colors: string;
 }
 
-const BarChart: React.FC<BarChartProps> = ({ series, categories, colors }) => (
-    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+const BarChart: React.FC<BarChartProps> = ({series, categories, colors}) => (
+    <div className="bg-white p-4 rounded-lg shadow-md mb-6" style={{ width: '100%', height: '100%' }}>
 
         <p className="flex justify-center text-lg font-bold">The quick brown fox ...</p>
 
@@ -16,10 +16,11 @@ const BarChart: React.FC<BarChartProps> = ({ series, categories, colors }) => (
             <Chart
                 series={series}
                 type="bar"
-                height={350}
-                width={800}
+                style={{ width: '100%', height: '100%' }}
+                height={`100%`}
+                width={`100%`}
                 options={{
-                    chart: {type: 'bar', height: 350},
+                    chart: {type: 'bar'},
                     plotOptions: {
                         bar: {horizontal: false, columnWidth: '55%', endingShape: 'rounded'}
                     },
