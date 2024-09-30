@@ -20,11 +20,8 @@ const Dashboard: React.FC = () => {
         series: [{ name: 'Target', data: [] }],
         categories: [],
     });
-
-    const tableData = [
-        { name: 'Ibu Hamil', population: 4901000, served: 4000000 },
-        { name: 'Ibu Bersalin/Nifas', population: 4901000, served: 4000000 },
-    ];
+    const [sasaran, setSasaran] = useState(""); // Track selected Sasaran
+    const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
         const fetchDonutData = async () => {
@@ -68,53 +65,36 @@ const Dashboard: React.FC = () => {
             }
         };
 
+        const fetchTableData = async (sasaran) => {
+            try {
+                const url = apiUrl(`/data/list-kunjungan?target=${sasaran}`);
+                const response = await axios.get(url);
+                const result = response.data;
+
+                if (result.rc === 'SUCCESS') {
+                    const data = result.payload.data;
+                    const formattedTableData = data.map((item: { name: string, population: number, served: number }) => ({
+                        name: item.name,
+                        population: item.people_count,
+                        served: item.service_count,
+                    }));
+
+                    setTableData(formattedTableData);
+                }
+            } catch (error) {
+                console.error('Error fetching table data:', error);
+            }
+        };
+
         fetchDonutData();
         fetchBarChartData();
-    }, []);
+        if (sasaran) fetchTableData(sasaran); // Call fetchTableData with the selected sasaran
+
+    }, [sasaran]); // Dependency on sasaran
 
     const handleDateChange = (start: string, end: string) => {
         setStartDate(start);
         setEndDate(end);
-    };
-
-    const SemuaSasaran = () => {
-        const [, setSelected] = useState("");
-        const [options, setOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
-
-        useEffect(() => {
-            const fetchOptions = async () => {
-                try {
-                    const url = apiUrl('/select-option/targets');
-                    const response = await axios.get(url);
-                    const data = response.data.payload.data;
-
-                    const mappedOptions = data.map((item: { id: string; name: string }) => ({
-                        value: item.id,
-                        label: item.name
-                    }));
-
-                    setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
-                } catch (error) {
-                    console.error('Error fetching options:', error);
-                }
-            };
-
-            fetchOptions();
-        }, []);
-
-        const handleSelectChange = (value: string) => setSelected(value);
-
-        return (
-            <div>
-                <h1>Pilih Sasaran</h1>
-                <SelectOption
-                    options={options}
-                    defaultValue=""
-                    onChange={(e) => handleSelectChange(e.target.value)}
-                    className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-            </div>
-        );
     };
 
     return (
@@ -138,7 +118,7 @@ const Dashboard: React.FC = () => {
                         <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
                     </div>
 
-                    <SasaranTerlayaniOption />
+                    <SasaranTerlayaniOption onSasaranChange={setSasaran} />
 
                     <div className="grid grid-cols-2 gap-4">
                         <TableComponent data={tableData} />
