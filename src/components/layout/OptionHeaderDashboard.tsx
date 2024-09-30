@@ -11,6 +11,7 @@ function OptionHeaderDashboard() {
     // State for dependencies
     const [selectedKecamatan, setSelectedKecamatan] = useState("");
     const [selectedPuskesmas, setSelectedPuskesmas] = useState("");
+    const [selectedSasaran, setSelectedSasaran] = useState(""); // State for selected Sasaran
 
     return (
         <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
@@ -44,12 +45,15 @@ function OptionHeaderDashboard() {
                     <OptionField 
                         label="Sasaran" 
                         endpoint="/select-option/targets" 
+                        onChange={setSelectedSasaran} // Update state on Sasaran change
                         type="target" // Specify type for target
                     />
                     <OptionField 
                         label="Layanan" 
-                        endpoint="/select-option/services" // Specify endpoint for layanan (services)
+                        endpoint={`/select-option/services?target=${selectedSasaran}`} // Update endpoint with selected target
                         type="service" // Specify type for layanan
+                        isDependent // Mark as dependent on Sasaran
+                        dependency={selectedSasaran} // Pass selected Sasaran as dependency
                     />
                 </>
             )}
@@ -65,11 +69,11 @@ const useFetchOptions = (endpoint, isDependent = false, dependency = null, type 
         const fetchOptions = async () => {
             if (isDependent && !dependency) return; // Don't fetch if dependency is required and not available
 
-            console.log("health_center" , type);
+            console.log("health_center", type);
             try {
                 const url = isDependent && dependency
-                    ? apiUrl(`${endpoint}?type=${type}&type_id=${dependency}`) // Modify query parameters for dependent requests
-                    : apiUrl(`${endpoint}?type=${type}`); // Always include type in the API request
+                    ? apiUrl(endpoint) // Use base endpoint directly, as dependency already included in OptionField
+                    : apiUrl(endpoint); // Always include type in the API request
                 const response = await axios.get(url);
                 const data = response.data.payload.data;
                 const mappedOptions = data.map(item => ({
@@ -111,4 +115,4 @@ const OptionField = ({ label, endpoint, isDependent = false, dependency = null, 
     );
 };
 
-export default OptionHeaderDashboard;
+export default OptionHeaderDashboard; 
