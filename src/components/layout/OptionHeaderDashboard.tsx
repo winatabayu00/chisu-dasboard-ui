@@ -67,7 +67,7 @@ function OptionHeaderDashboard() {
     }
 
     function DistrictOption() {
-        const [, setSelected] = useState("");
+        const [selected, setSelected] = useState("");
         const [options, setOptions] = useState([{ value: "", label: "Pilih Kecamatan" }]);
 
         useEffect(() => {
@@ -100,22 +100,21 @@ function OptionHeaderDashboard() {
                 <SelectOption
                     options={options}
                     defaultValue=""
-                    onChange={(e) => handleSelectChange(e.target.value)}
+                    onChange={handleSelectChange}
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
             </div>
         );
     }
 
-    function SubDistrictOption() {
-        const [, setSelected] = useState("");
-        const [options, setOptions] = useState([{ value: "", label: "Pilih Desa / Kelurahan" }]);
+function SubDistrictOption({ selectedDistrict }) {
+    const [options, setOptions] = useState([{ value: "", label: "Pilih Desa / Kelurahan" }]);
 
-        useEffect(() => {
-            const fetchData = async () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            if (selectedDistrict) {
                 try {
-
-                       const url = apiUrl('/select-option/sub-districts'); // Pass the API endpoint
+                    const url = apiUrl(`/select-option/sub-districts?district_code=${selectedDistrict}`);
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -126,28 +125,30 @@ function OptionHeaderDashboard() {
 
                     setOptions([{ value: "", label: "Pilih Desa / Kelurahan" }, ...mappedOptions]);
                 } catch (error) {
+                    console.error(error);
                 }
-            };
-
-            fetchData();
-        }, []);
-
-        const handleSelectChange = (value) => {
-            setSelected(value);
+            }
         };
 
-        return (
-            <div>
-                <label className="block text-sm font-medium text-gray-700">Desa / Kelurahan</label>
-                <SelectOption
-                    options={options}
-                    defaultValue=""
-                    onChange={(e) => handleSelectChange(e.target.value)}
-                    className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-            </div>
-        );
-    }
+        fetchData();
+    }, [selectedDistrict]);
+
+    const handleSelectChange = (value) => {
+        console.log("Selected Subdistrict:", value); // Instead of using state
+    };
+
+    return (
+        <div>
+            <label className="block text-sm font-medium text-gray-700">Desa / Kelurahan</label>
+            <SelectOption
+                options={options}
+                defaultValue=""
+                onChange={(e) => handleSelectChange(e.target.value)}
+                className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            />
+        </div>
+    );
+}
 
     function HealthCenterOption() {
         const [, setSelected] = useState("");
