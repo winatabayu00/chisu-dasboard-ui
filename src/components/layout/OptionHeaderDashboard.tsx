@@ -8,10 +8,13 @@ function OptionHeaderDashboard() {
     const location = useLocation();
     const gridCols = location.pathname === '/morbiditas-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
 
+    // Add selectedDistrict state
+    const [selectedDistrict, setSelectedDistrict] = useState("");
+
     return (
         <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
-            <DistrictOption />
-            <SubDistrictOption />
+            <DistrictOption setSelectedDistrict={setSelectedDistrict} />
+            <SubDistrictOption selectedDistrict={selectedDistrict} />
             <HealthCenterOption />
             <GenderOption />
             <SasaranOption />
@@ -25,10 +28,7 @@ function OptionHeaderDashboard() {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-
-                    const url = apiUrl('/select-option/targets'); // Pass the API endpoint
-
-
+                    const url = apiUrl('/select-option/targets');
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -39,6 +39,7 @@ function OptionHeaderDashboard() {
 
                     setOptions([{ value: "", label: "Pilih Sasaran" }, ...mappedOptions]);
                 } catch (error) {
+                    console.error(error);
                 }
             };
 
@@ -66,14 +67,14 @@ function OptionHeaderDashboard() {
         return <div></div>;
     }
 
-    function DistrictOption() {
+    function DistrictOption({ setSelectedDistrict }) {
         const [selected, setSelected] = useState("");
         const [options, setOptions] = useState([{ value: "", label: "Pilih Kecamatan" }]);
 
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const url = apiUrl('/select-option/districts'); // Pass the API endpoint
+                    const url = apiUrl('/select-option/districts');
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -83,7 +84,9 @@ function OptionHeaderDashboard() {
                     }));
 
                     setOptions([{ value: "", label: "Pilih Kecamatan" }, ...mappedOptions]);
+                    console.log("Option " , options);
                 } catch (error) {
+                    console.error(error);
                 }
             };
 
@@ -92,6 +95,7 @@ function OptionHeaderDashboard() {
 
         const handleSelectChange = (value) => {
             setSelected(value);
+            setSelectedDistrict(value); // Update selectedDistrict state in the parent component
         };
 
         return (
@@ -100,55 +104,57 @@ function OptionHeaderDashboard() {
                 <SelectOption
                     options={options}
                     defaultValue=""
+                    // onChange={(e) => handleSelectChange(e.target.value)}
                     onChange={handleSelectChange}
+
                     className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 />
             </div>
         );
     }
 
-function SubDistrictOption({ selectedDistrict }) {
-    const [options, setOptions] = useState([{ value: "", label: "Pilih Desa / Kelurahan" }]);
+    function SubDistrictOption({ selectedDistrict }) {
+        const [options, setOptions] = useState([{ value: "", label: "Pilih Desa / Kelurahan" }]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (selectedDistrict) {
-                try {
-                    const url = apiUrl(`/select-option/sub-districts?district_code=${selectedDistrict}`);
-                    const response = await axios.get(url);
-                    const data = response.data.payload.data;
+        useEffect(() => {
+            const fetchData = async () => {
+                if (selectedDistrict) {
+                    try {
+                        const url = apiUrl(`/select-option/sub-districts?district_code=${selectedDistrict}`);
+                        const response = await axios.get(url);
+                        const data = response.data.payload.data;
 
-                    const mappedOptions = data.map(item => ({
-                        value: item.id,
-                        label: item.name
-                    }));
+                        const mappedOptions = data.map(item => ({
+                            value: item.id,
+                            label: item.name
+                        }));
 
-                    setOptions([{ value: "", label: "Pilih Desa / Kelurahan" }, ...mappedOptions]);
-                } catch (error) {
-                    console.error(error);
+                        setOptions([{ value: "", label: "Pilih Desa / Kelurahan" }, ...mappedOptions]);
+                    } catch (error) {
+                        console.error(error);
+                    }
                 }
-            }
+            };
+
+            fetchData();
+        }, [selectedDistrict]);
+
+        const handleSelectChange = (value) => {
+            console.log("Selected Subdistrict:", value);
         };
 
-        fetchData();
-    }, [selectedDistrict]);
-
-    const handleSelectChange = (value) => {
-        console.log("Selected Subdistrict:", value); // Instead of using state
-    };
-
-    return (
-        <div>
-            <label className="block text-sm font-medium text-gray-700">Desa / Kelurahan</label>
-            <SelectOption
-                options={options}
-                defaultValue=""
-                onChange={(e) => handleSelectChange(e.target.value)}
-                className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            />
-        </div>
-    );
-}
+        return (
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Desa / Kelurahan</label>
+                <SelectOption
+                    options={options}
+                    defaultValue=""
+                    onChange={(e) => handleSelectChange(e.target.value)}
+                    className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                />
+            </div>
+        );
+    }
 
     function HealthCenterOption() {
         const [, setSelected] = useState("");
@@ -157,7 +163,7 @@ function SubDistrictOption({ selectedDistrict }) {
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                       const url = apiUrl('/select-option/health-centers'); // Pass the API endpoint
+                    const url = apiUrl('/select-option/health-centers');
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
@@ -168,6 +174,7 @@ function SubDistrictOption({ selectedDistrict }) {
 
                     setOptions([{ value: "", label: "Pilih Puskesmas" }, ...mappedOptions]);
                 } catch (error) {
+                    console.error(error);
                 }
             };
 
@@ -193,14 +200,13 @@ function SubDistrictOption({ selectedDistrict }) {
 
     function GenderOption() {
         const [, setSelected] = useState("");
-            const [options, setOptions] = useState([{ value: "", label: "Pilih Jenis Kelamin" }]);
+        const [options, setOptions] = useState([{ value: "", label: "Pilih Jenis Kelamin" }]);
 
         useEffect(() => {
             const fetchData = async () => {
                 try {
-                        const url = apiUrl('/select-option/genders'); // Pass the API endpoint
+                    const url = apiUrl('/select-option/genders');
                     const response = await axios.get(url);
-                    // const response = await axios.get('http://chisu-core.me/api/select-option/');
                     const data = response.data.payload.data;
 
                     const mappedOptions = data.map(item => ({
@@ -210,6 +216,7 @@ function SubDistrictOption({ selectedDistrict }) {
 
                     setOptions([{ value: "", label: "Pilih Jenis Kelamin" }, ...mappedOptions]);
                 } catch (error) {
+                    console.error(error);
                 }
             };
 
