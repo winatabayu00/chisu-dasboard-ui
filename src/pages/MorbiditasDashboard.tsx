@@ -1,24 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
 import * as echarts from "echarts";
-import {apiUrl} from "../helpers/helpers.ts";
+import { apiUrl } from "../helpers/helpers.ts";
 import axios from "axios";
 
 const Dashboard: React.FC = () => {
-    const chartRef = useRef<HTMLDivElement>(null);
+    const chartRef = useRef<HTMLDivElement>(null); // Reference to the chart container
     const [startDate, setStartDate] = useState('2024-01-01');
     const [endDate, setEndDate] = useState('2024-01-31');
+    const [morbiditasData, setMorbiditasData] = useState([]); // State for treemap data
 
-    const [morbiditasData, setMorbiditasData] = useState([]); // state untuk data treemap
-
-    // Function to handle date range changes from DateRangeFilter
+    // Function to handle date range changes
     const handleDateChange = (start: string, end: string) => {
         setStartDate(start);
         setEndDate(end);
     };
 
-    // Fetching data when startDate or endDate changes
+    // Fetch morbiditas data when startDate or endDate changes
     useEffect(() => {
         const fetchMorbiditas = async () => {
             try {
@@ -34,21 +33,22 @@ const Dashboard: React.FC = () => {
                 if (result.rc === 'SUCCESS') {
                     const data = result.payload.data;
 
-                    // Mapping the data into the structure required for treemap
+                    // Map data to match treemap requirements
                     const mappedData = data.map((item: { name: string, count: number }) => ({
                         name: item.name,
                         value: item.count
                     }));
 
-                    setMorbiditasData(mappedData); // Simpan data yang sudah di-mapping
+                    setMorbiditasData(mappedData); // Save mapped data to state
                 }
             } catch (error) {
                 console.error('Error fetching morbiditas data:', error);
             }
         };
         fetchMorbiditas();
-    }, [startDate, endDate]); // Re-fetch data whenever the date range changes
+    }, [startDate, endDate]); // Refetch data when the date range changes
 
+    // Initialize and update the ECharts treemap when morbiditasData is available
     useEffect(() => {
         if (chartRef.current && morbiditasData.length > 0) {
             const chartInstance = echarts.init(chartRef.current);
@@ -56,29 +56,29 @@ const Dashboard: React.FC = () => {
             const option = {
                 tooltip: {
                     trigger: 'item',
-                    formatter: '{b}: {c}'
+                    formatter: '{b}: {c}' // Format for tooltip
                 },
                 series: [
                     {
                         type: 'treemap',
-                        data: morbiditasData,
+                        data: morbiditasData, // Data for treemap
                         label: {
                             show: true,
-                            formatter: '{b}\n{c}',
+                            formatter: '{b}\n{c}', // Display name and value in the chart
                             fontSize: 14,
-                            color: '#fff',
+                            color: '#fff', // Label color
                         },
                         itemStyle: {
                             borderColor: '#fff',
                             borderWidth: 2,
-                            gapWidth: 2,
+                            gapWidth: 2, // Style for treemap items
                         },
                         levels: [
                             {
                                 itemStyle: {
                                     borderColor: '#fff',
                                     borderWidth: 2,
-                                    gapWidth: 2,
+                                    gapWidth: 2, // Level style
                                 },
                             },
                         ],
@@ -88,19 +88,20 @@ const Dashboard: React.FC = () => {
 
             chartInstance.setOption(option);
 
+            // Resize chart on window resize
             const handleResize = () => {
                 chartInstance.resize();
             };
 
             window.addEventListener('resize', handleResize);
 
+            // Clean up
             return () => {
                 window.removeEventListener('resize', handleResize);
-                chartInstance.dispose();
+                chartInstance.dispose(); // Dispose of chart on unmount
             };
         }
-    }, [morbiditasData]);
-
+    }, [morbiditasData]); // Update chart when data changes
 
     return (
         <div className="p-4 sm:ml-64">
@@ -121,7 +122,7 @@ const Dashboard: React.FC = () => {
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
                     {/* ECharts Treemap Section */}
-                    <div className="w-full h-96">
+                    <div className="w-full h-full">
                         <div ref={chartRef} style={{ width: '100%', height: '100%' }}></div>
                     </div>
                 </main>
