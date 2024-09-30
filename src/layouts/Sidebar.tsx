@@ -3,9 +3,9 @@ import logo from "../assets/images/dinkes-kota-logo.png";
 import smallLogo from "../assets/images/dinkes-kota-logo.png"; // Add a smaller version of the logo
 import left from "../assets/images/left.png";
 import right from "../assets/images/left.png"; // Use the right icon correctly for expanding
-import dashboard from "../assets/images/dashboard.png"; // Use the right icon correctly for expanding
-import user from "../assets/images/User.png"; // Use the right icon correctly for expanding
-import documents from "../assets/images/document.png"; // Use the right icon correctly for expanding
+import dashboard from "../assets/images/dashboard.png";
+import user from "../assets/images/User.png";
+import documents from "../assets/images/document.png";
 
 import { NavLink } from 'react-router-dom';
 
@@ -18,7 +18,6 @@ const Sidebar: React.FC = () => {
 
     return (
         <>
- 
             <aside
                 id="default-sidebar"
                 className={`fixed top-0 left-0 z-40 h-screen bg-[#FFFFFF] transition-width duration-300 ${
@@ -52,20 +51,20 @@ const Sidebar: React.FC = () => {
 
                     <ul className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200">
                         <li>
-
                             <NavLink
-                                to="/dilp/"
+                                to="/dilp/main-dashboard"
+                                
                                 className={({ isActive }) =>
                                     `flex items-center p-2 rounded-lg group ${
                                         isActive ? 'bg-[#122B4C] text-white' : 'text-gray-500'
                                     } ${isMinimized ? 'justify-center' : ''}`
                                 }
                             >
-                              <img
-                            src={isMinimized ? dashboard : dashboard}
-                            alt="Dashboard Utama"
-                            className={`${isMinimized ? 'w-5 h-5' : 'mr-2'}`} // Adjust size when minimized
-                        />
+                                <img
+                                    src={dashboard}
+                                    alt="Dashboard Utama"
+                                    className={`${isMinimized ? 'w-5 h-5' : 'mr-2'}`}
+                                />
                                 {!isMinimized && <span className="ml-3">Dashboard Utama</span>}
                             </NavLink>
                         </li>
@@ -79,9 +78,9 @@ const Sidebar: React.FC = () => {
                                 }
                             >
                                 <img
-                                    src={isMinimized ? user : user}
-                                    alt="Dashboard Mordibitas"
-                                    className={`${isMinimized ? 'w-5 h-5' : 'mr-2'}`} // Adjust size when minimized
+                                    src={user}
+                                    alt="Dashboard Morbiditas"
+                                    className={`${isMinimized ? 'w-5 h-5' : 'mr-2'}`}
                                 />
                                 {!isMinimized && <span className="ml-3">Dashboard Morbiditas</span>}
                             </NavLink>
@@ -95,10 +94,10 @@ const Sidebar: React.FC = () => {
                                     } ${isMinimized ? 'justify-center' : ''}`
                                 }
                             >
-                             <img
-                                    src={isMinimized ? documents : documents}
+                                <img
+                                    src={documents}
                                     alt="Dashboard Layanan"
-                                    className={`${isMinimized ? 'w-5 h-5' : 'mr-2'}`} // Adjust size when minimized
+                                    className={`${isMinimized ? 'w-5 h-5' : 'mr-2'}`}
                                 />
                                 {!isMinimized && <span className="ml-3">Dashboard Layanan</span>}
                             </NavLink>
@@ -107,7 +106,7 @@ const Sidebar: React.FC = () => {
                 </div>
             </aside>
 
-            {/* Content of the page will stay unaffected */}
+            {/* Content of the page */}
             <div className="ml-0">
                 {/* Your main content here */}
             </div>
