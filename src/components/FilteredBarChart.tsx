@@ -134,20 +134,20 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({
                 <div className="flex items-center me-2">
                     <i className="fas fa-filter mr-2"></i>
                     <button
-                        disabled="true"
+                        disabled="true" hidden="hidden"
                         className={`px-4 py-2 rounded-md ${filterDate === 'weekly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChangeDate('weekly')}
                     >
                         weekly
                     </button>
 
-                    <button
+                    <button hidden="hidden"
                         className={`px-4 py-2 rounded-md ${filterDate === 'monthly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChangeDate('monthly')}
                     >
                         monthly
                     </button>
-                    <button
+                    <button hidden="hidden"
                         disabled="true"
                         className={`px-4 py-2 rounded-md ${filterDate === 'yearly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChangeDate('yearly')}
@@ -176,20 +176,7 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                    {/* Sasaran Select */}
-                    <SelectOption
-                        options={sasaranOptions}
-                        value={selected}
-                        onChange={handleSelectChange}
-                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    />
-                    {/* Layanan Select */}
-                    <SelectOption
-                        options={layananOptions}
-                        defaultValue=""
-                        onChange={handleLayananChange}
-                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    />
+
                 </div>
             </div>
 

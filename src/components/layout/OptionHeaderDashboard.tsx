@@ -6,15 +6,16 @@ import axios from 'axios';
 
 function OptionHeaderDashboard() {
     const location = useLocation();
-    const gridCols = location.pathname === '/morbiditas-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
+    const gridCols = location.pathname === '/dilp/service-dashboard' ? 'grid-cols-6' : 'grid-cols-4';
 
     return (
         <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
             <DistrictOption />
-            <SubDistrictOption />
             <HealthCenterOption />
+            <SubDistrictOption />
             <GenderOption />
             <SasaranOption />
+            <LayananOption />
         </div>
     );
 
@@ -49,10 +50,56 @@ function OptionHeaderDashboard() {
             setSelected(value);
         };
 
-        if (location.pathname === '/morbiditas-dashboard') {
+        if (location.pathname === '/dilp/service-dashboard') {
             return (
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Sasaran</label>
+                    <SelectOption
+                        options={options}
+                        defaultValue=""
+                        onChange={(e) => handleSelectChange(e.target.value)}
+                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    />
+                </div>
+            );
+        }
+
+        return <div></div>;
+    }
+
+    function LayananOption() {
+        const [, setSelected] = useState("");
+        const [options, setOptions] = useState([{ value: "", label: "Pilih Layanan" }]);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const url = apiUrl('/select-option/services'); // Pass the API endpoint
+
+                    const response = await axios.get(url);
+                    const data = response.data.payload.data;
+
+                    const mappedOptions = data.map(item => ({
+                        value: item.id,
+                        label: item.name
+                    }));
+
+                    setOptions([{ value: "", label: "Pilih Layanan" }, ...mappedOptions]);
+                } catch (error) {
+                }
+            };
+
+            fetchData();
+        }, []);
+
+        const handleSelectChange = (value) => {
+            setSelected(value);
+        };
+
+        if (location.pathname === '/dilp/service-dashboard') {
+            return (
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Layanan</label>
                     <SelectOption
                         options={options}
                         defaultValue=""

@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
+import DateRangeFilter from "../components/field/DateRangeFilter";
 import { apiUrl } from "../helpers/helpers";
-import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard.tsx";
+import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard";
 import FilteredBarChart from "../components/FilteredBarChart";
 import DonutChart from "../components/DonutChart";
 import TableComponent from "../components/TableComponent";
-import SelectOption from "../components/field/SelectOption.tsx";
+import SelectOption from "../components/field/SelectOption";
+import SasaranTerlayaniOption from "../components/SasaranTerlayaniOption";
 import axios from "axios";
 
 const Dashboard: React.FC = () => {
-    // Example start and end dates to pass to DateRangeFilter
     const [startDate, setStartDate] = useState('01/01/2024');
     const [endDate, setEndDate] = useState('01/31/2024');
-
     const [donutData, setDonutData] = useState({
         seriesPenduduk: [0, 0],
         seriesTerlayani: [0, 0],
     });
-
     const [barChartData, setBarChartData] = useState({
         series: [{ name: 'Target', data: [] }],
         categories: [],
@@ -74,18 +72,23 @@ const Dashboard: React.FC = () => {
         fetchBarChartData();
     }, []);
 
-    function SemuaSasaran() {
+    const handleDateChange = (start: string, end: string) => {
+        setStartDate(start);
+        setEndDate(end);
+    };
+
+    const SemuaSasaran = () => {
         const [, setSelected] = useState("");
         const [options, setOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
 
         useEffect(() => {
-            const fetchData = async () => {
+            const fetchOptions = async () => {
                 try {
                     const url = apiUrl('/select-option/targets');
                     const response = await axios.get(url);
                     const data = response.data.payload.data;
 
-                    const mappedOptions = data.map(item => ({
+                    const mappedOptions = data.map((item: { id: string; name: string }) => ({
                         value: item.id,
                         label: item.name
                     }));
@@ -96,12 +99,10 @@ const Dashboard: React.FC = () => {
                 }
             };
 
-            fetchData();
+            fetchOptions();
         }, []);
 
-        const handleSelectChange = (value) => {
-            setSelected(value);
-        };
+        const handleSelectChange = (value: string) => setSelected(value);
 
         return (
             <div>
@@ -114,31 +115,12 @@ const Dashboard: React.FC = () => {
                 />
             </div>
         );
-    }
-
-    const handleDateChange = (start: string, end: string) => {
-        setStartDate(start);
-        setEndDate(end);
-        console.log('Start Date:', start);
-        console.log('End Date:', end);
-        // Fetch data or do other operations here based on the new dates
     };
 
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
                 <main className="flex-1 p-6 headers">
-
-                    {/* Charts */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
-                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
-                    </div>
-
-                    {/* Table */}
-                    <TableComponent data={tableData} />
-
-                    {/* Pass startDate and endDate to DateRangeFilter */}
                     <DateRangeFilter
                         defaultStartDate={startDate}
                         defaultEndDate={endDate}
@@ -151,33 +133,22 @@ const Dashboard: React.FC = () => {
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
+                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
+                    </div>
 
-{/*
-                    <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-                        <div className="flex justify-between items-center mb-4">
-                            <div className="flex items-center me-2">
-                                <i className="fas fa-filter mr-2"></i>
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Mingguan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Bulanan</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Absolut</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Kumulatif</button>
-                                <button className="ml-2 bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Persentase</button>
-                            </div>
+                    <SasaranTerlayaniOption />
 
-                            <div className="grid grid-cols-2 gap-4 mb-6">
-                                <SemuaSasaran />
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <BarChart series={barChartData.series} categories={barChartData.categories} colors="#47BDF9" />
-                        </div>
-                    </div>*/}
-
-                    {/*Filter Bar Chart*/}
-
-                           {/* Filtered Bar Chart */}
-                    <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate} defaultEndDate={endDate} barChartColor="#47BDF9"/>
-
+                    <div className="grid grid-cols-2 gap-4">
+                        <TableComponent data={tableData} />
+                        <FilteredBarChart
+                            prefix="/data/sasaran-terlayani"
+                            defaultStartDate={startDate}
+                            defaultEndDate={endDate}
+                            barChartColor="#47BDF9"
+                        />
+                    </div>
                 </main>
             </div>
         </div>
