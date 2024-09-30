@@ -72,60 +72,17 @@ const ServiceDashboard: React.FC = () => {
         fetchBarChartData();
     }, []);
 
-    const handleDateChange = (start: string, end: string) => {
-        setStartDate(start);
-        setEndDate(end);
-        console.log('Start Date:', start);
-        console.log('End Date:', end);
-        // Fetch data or do other operations here based on the new dates
-    };
 
-    function LayananOption() {
-        const [, setSelected] = useState("");
-        const [options, setOptions] = useState([{value: "", label: "Pilih Layanan"}]);
-
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const url = apiUrl('/select-option/services'); // Pass the API endpoint
-
-                    const response = await axios.get(url);
-                    const data = response.data.payload.data;
-
-                    const mappedOptions = data.map(item => ({
-                        value: item.id,
-                        label: item.name
-                    }));
-
-                    setOptions([{value: "", label: "Pilih Layanan"}, ...mappedOptions]);
-                } catch (error) {
-                    console.error("Error fetching options:", error);
-                }
-            };
-
-            fetchData();
-        }, []);
-
-        const handleSelectChange = (value) => {
+        const handleDateChange = (start: string, end: string) => {
+            setStartDate(start);
+            setEndDate(end);
+            console.log('Start Date:', start);
+            console.log('End Date:', end);
+            // Fetch data or do other operations here based on the new dates
+        };
+      const handleSelectChange = (value) => {
             setSelected(value);
         };
-
-        return (
-            <div className="flex justify-center mb-5">
-                <div className="block">
-                    <label className="flex justify-center ext-center text-sm font-medium text-gray-700">Layanan</label>
-                    <SelectOption
-                        options={options}
-                        defaultValue=""
-                        onChange={(e) => handleSelectChange(e.target.value)}
-                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                    />
-                </div>
-            </div>
-
-        )
-            ;
-    }
 
 
     return (
@@ -147,7 +104,7 @@ const ServiceDashboard: React.FC = () => {
                     <Grid/>
 
                     <div>
-                        <LayananOption/>
+                        {/*<LayananOption/>*/}
                         <div className="grid grid-cols-2 gap-4 mb-6">
                             <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate}
                                               defaultEndDate={endDate} barChartColor="#47BDF9"/>
