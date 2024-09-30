@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function OptionHeaderDashboard() {
     const location = useLocation();
-    const gridCols = location.pathname === '/dilp/service-dashboard' ? 'grid-cols-6' : 'grid-cols-4';
+    const gridCols = location.pathname === '/dilp/service-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
 
     return (
         <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
@@ -15,7 +15,7 @@ function OptionHeaderDashboard() {
             <SubDistrictOption />
             <GenderOption />
             <SasaranOption />
-            <LayananOption />
+            {/*<LayananOption />*/}
         </div>
     );
 

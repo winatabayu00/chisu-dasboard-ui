@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import SelectOption from '../components/field/SelectOption.tsx';
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
-import { apiUrl } from "../helpers/helpers";
+import {apiUrl} from "../helpers/helpers";
 import axios from "axios";
 import FilteredBarChart from "../components/FilteredBarChart.tsx";
 
@@ -11,12 +11,12 @@ const ServiceDashboard: React.FC = () => {
     const [startDate, setStartDate] = useState('01/01/2024');
     const [endDate, setEndDate] = useState('01/31/2024');
     const [barChartData, setBarChartData] = useState({
-        series: [{ name: 'Target', data: [] }],
+        series: [{name: 'Target', data: []}],
         categories: [],
     });
 
     const [barChartDataPuskesmas, setBarChartDataPuskesmas] = useState({
-        series: [{ name: 'Target', data: [] }],
+        series: [{name: 'Target', data: []}],
         categories: [],
     });
 
@@ -39,7 +39,7 @@ const ServiceDashboard: React.FC = () => {
                     const name = data.map((item: { name: string }) => item.name);
 
                     setBarChartDataPuskesmas({
-                        series: [{ name: 'Target', data: counts }],
+                        series: [{name: 'Target', data: counts}],
                         categories: name,
                     });
                 }
@@ -60,7 +60,7 @@ const ServiceDashboard: React.FC = () => {
                     const months = data.map((item: { month: string }) => item.month);
 
                     setBarChartData({
-                        series: [{ name: 'Target', data: counts }],
+                        series: [{name: 'Target', data: counts}],
                         categories: months,
                     });
                 }
@@ -80,6 +80,54 @@ const ServiceDashboard: React.FC = () => {
         // Fetch data or do other operations here based on the new dates
     };
 
+    function LayananOption() {
+        const [, setSelected] = useState("");
+        const [options, setOptions] = useState([{value: "", label: "Pilih Layanan"}]);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const url = apiUrl('/select-option/services'); // Pass the API endpoint
+
+                    const response = await axios.get(url);
+                    const data = response.data.payload.data;
+
+                    const mappedOptions = data.map(item => ({
+                        value: item.id,
+                        label: item.name
+                    }));
+
+                    setOptions([{value: "", label: "Pilih Layanan"}, ...mappedOptions]);
+                } catch (error) {
+                    console.error("Error fetching options:", error);
+                }
+            };
+
+            fetchData();
+        }, []);
+
+        const handleSelectChange = (value) => {
+            setSelected(value);
+        };
+
+        return (
+            <div className="flex justify-center mb-5">
+                <div className="block">
+                    <label className="flex justify-center ext-center text-sm font-medium text-gray-700">Layanan</label>
+                    <SelectOption
+                        options={options}
+                        defaultValue=""
+                        onChange={(e) => handleSelectChange(e.target.value)}
+                        className="bg-gray-50 me-1 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                    />
+                </div>
+            </div>
+
+        )
+            ;
+    }
+
+
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
@@ -98,20 +146,25 @@ const ServiceDashboard: React.FC = () => {
 
                     <Grid/>
 
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                        <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate}
-                                          defaultEndDate={endDate} barChartColor="#47BDF9"/>
-                        <FilteredBarChart prefix="/data/sasaran-puskesmas-terlayani" defaultStartDate={startDate}
-                                          defaultEndDate={endDate} barChartColor="#A77FE9"/>
+                    <div>
+                        <LayananOption/>
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                            <FilteredBarChart prefix="/data/sasaran-terlayani" defaultStartDate={startDate}
+                                              defaultEndDate={endDate} barChartColor="#47BDF9"/>
+                            <FilteredBarChart prefix="/data/sasaran-puskesmas-terlayani" defaultStartDate={startDate}
+                                              defaultEndDate={endDate} barChartColor="#A77FE9"/>
+                        </div>
+
                     </div>
 
                     <div className="flex justify-center">
                         <a href="#"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Untuk Detail Lebih Lanjut Klik Disini
                             <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2"
                                       d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
                         </a>
@@ -131,9 +184,10 @@ const ServiceDashboard: React.FC = () => {
         return (
             <div className="grid grid-cols-3 gap-1 mb-5">
                 {data.map((item, index) => (
-                    <div key={index} className={`p-6 bg-white border border-gray-200 rounded-lg shadow`} style={{backgroundColor: `${item.cardColor}`}}>
+                    <div key={index} className={`p-6 bg-white border border-gray-200 rounded-lg shadow`}
+                         style={{backgroundColor: `${item.cardColor}`}}>
                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="20" cy="20" r="20" fill={item.svgColor} />
+                            <circle cx="20" cy="20" r="20" fill={item.svgColor}/>
                             <path
                                 fillRule="evenodd"
                                 clipRule="evenodd"
