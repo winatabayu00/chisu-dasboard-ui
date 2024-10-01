@@ -28,9 +28,10 @@ function OptionHeaderDashboard() {
                 onChange={setSelectedPuskesmas} // Pass selected value
                 type="health_center" // Specify type for puskesmas
             />
-            <OptionField 
+                <OptionField 
                 label="Desa / Kelurahan" 
                 endpoint="/select-option/sub-districts" 
+                endpoint={`/select-option/sub-districts?type=${selectedPuskesmas ? "health_center" : "district"}&type_id=${selectedPuskesmas || selectedKecamatan}`} // Update endpoint with selected target
                 isDependent 
                 dependency={selectedPuskesmas || selectedKecamatan} // Desa/Kelurahan depends on selected Puskesmas or Kecamatan
                 type="health_center" // Specify type for Desa/Kelurahan
@@ -70,11 +71,16 @@ const useFetchOptions = (endpoint, isDependent = false, dependency = null, type 
             if (isDependent && !dependency) return; // Don't fetch if dependency is required and not available
 
             console.log("health_center", type);
+
+
+
             try {
                 const url = isDependent && dependency
                     ? apiUrl(endpoint) // Use base endpoint directly, as dependency already included in OptionField
                     : apiUrl(endpoint); // Always include type in the API request
                 const response = await axios.get(url);
+                console.log("response", response.data.payload);
+
                 const data = response.data.payload.data;
                 const mappedOptions = data.map(item => ({
                     value: item.id,
