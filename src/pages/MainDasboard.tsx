@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter";
 import {apiUrl} from "../helpers/helpers";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard";
-import FilteredBarChart from "../components/FilteredBarChart";
+import FilteredBarChartUtama from "../components/FilteredBarChartUtama";
 import DonutChart from "../components/DonutChart";
 import TableComponent from "../components/TableComponent";
 import SasaranTerlayaniOption from "../components/SasaranTerlayaniOption";
@@ -30,8 +30,19 @@ const Dashboard: React.FC = () => {
         layanan: ''
     });
 
-    const handleOptionsChange = (newFilters) => {
-        setFilters(newFilters);
+
+   const handleOptionsChange = (newFilters) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            ...newFilters
+        }));
+    };
+
+    const handleSasaranChange = (sasaran: string) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            sasaran  // Update only the sasaran in the filters object
+        }));
     };
 
     const handleDateChange = (start: string, end: string) => {
@@ -100,7 +111,7 @@ const Dashboard: React.FC = () => {
                     }));
 
                     setTableData(formattedTableData);
-                    fetchBarChartData(sasaran, ''); // ambil aggregate dari pilihan absolute, cumulateive , percentage
+                    fetchBarChartData(sasaran, 'absolute'); // ambil aggregate dari pilihan absolute, cumulateive , percentage
                 }
             } catch (error) {
                 console.error('Error fetching table data:', error);
@@ -134,17 +145,18 @@ const Dashboard: React.FC = () => {
                         <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4"/>
                     </div>
 
-                    <SasaranTerlayaniOption onSasaranChange={setSasaran}/>
+                    <SasaranTerlayaniOption onSasaranChange={handleSasaranChange} onSasaran={setSasaran} />
 
                     <div className="grid grid-cols-2 gap-4">
                         <TableComponent data={tableData}/>
-                        <FilteredBarChart
-                            prefix="/data/total-terlayani"
-                            defaultStartDate={startDate}
-                            defaultEndDate={endDate}
-                            filters={filters}  // passing filters as props
-                            barChartColor="#47BDF9"
-                        />
+
+                            <FilteredBarChartUtama
+                                prefix={`/data/list-kunjungan`}
+                                defaultStartDate={startDate}
+                                defaultEndDate={endDate}
+                                filters={filters} // Passing the updated filters
+                                barChartColor="#47BDF9"
+                            />
                     </div>
                 </main>
             </div>

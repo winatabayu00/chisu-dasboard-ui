@@ -5,9 +5,11 @@ import { apiUrl } from '../helpers/helpers';
 
 interface SasaranTerlayaniOptionProps {
     onSasaranChange: (value: string) => void; // Prop to pass the selected Sasaran back to the parent
+    onSasaran: (value: string) => void; // Prop to pass the selected Sasaran back to the parent
+
 }
 
-const SasaranTerlayaniOption: React.FC<SasaranTerlayaniOptionProps> = ({ onSasaranChange }) => {
+const SasaranTerlayaniOption: React.FC<SasaranTerlayaniOptionProps> = ({ onSasaranChange , onSasaran }) => {
     const [selected, setSelected] = useState<string>("");
     const [sasaranOptions, setSasaranOptions] = useState([{ value: "", label: "Pilih Sasaran" }]);
 
@@ -32,8 +34,11 @@ const SasaranTerlayaniOption: React.FC<SasaranTerlayaniOptionProps> = ({ onSasar
     }, []);
 
     const handleSelectChange = (value: string) => {
+        console.log("Selected option:", value);
         setSelected(value || "");
         onSasaranChange(value || ""); // Pass the selected value to the parent
+        onSasaran(value || ""); // Pass the selected value to the parent
+
     };
 
     return (
@@ -48,4 +53,4 @@ const SasaranTerlayaniOption: React.FC<SasaranTerlayaniOptionProps> = ({ onSasar
     );
 };
 
-export default SasaranTerlayaniOption; 
+export default SasaranTerlayaniOption;
