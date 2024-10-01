@@ -151,7 +151,7 @@ const Dashboard: React.FC = () => {
                         <TableComponent data={tableData}/>
 
                             <FilteredBarChartUtama
-                                prefix={`/data/list-kunjungan`}
+                                prefix={`/data/total-terlayani`}
                                 defaultStartDate={startDate}
                                 defaultEndDate={endDate}
                                 filters={filters} // Passing the updated filters

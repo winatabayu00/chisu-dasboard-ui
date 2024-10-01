@@ -59,9 +59,9 @@ const FilteredBarChartUtama: React.FC<FilteredBarChartProps> = ({
             const result = response.data;
 
             if (result.rc === 'SUCCESS') {
-                const data = result.payload.data.results;
+                const data = result.payload.data;
                 console.log("Datas ", data);
-                const counts = data.map((item: { count: number }) => item.target_total);
+                const counts = data.map((item: { count: number }) => item.count);
                 const categories = data.map((item: { name: string }) => item.name);
 
                 setBarChartData({
