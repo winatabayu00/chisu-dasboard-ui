@@ -11,6 +11,8 @@ import axios from "axios";
 const Dashboard: React.FC = () => {
     const [startDate, setStartDate] = useState('2024-01-01');
     const [endDate, setEndDate] = useState('2024-12-31');
+    const [noDataMessage, setNoDataMessage] = useState('');
+
     const [donutData, setDonutData] = useState({
         seriesPenduduk: [0, 0],
         seriesTerlayani: [0, 0],
@@ -92,31 +94,60 @@ const Dashboard: React.FC = () => {
             }
         };
 
+
         const fetchTableData = async (sasaran) => {
+            // Check if sasaran is empty or undefined
+            // if (!sasaran) {
+            //     setNoDataMessage('Data tidak ditemukan. Mohon pilih sasaran.');
+            //     setTableData([]); // Clear any previous table data
+            //     return; // Exit the function early
+            // }
+
             try {
                 const url = apiUrl(`/data/list-kunjungan?target=${sasaran}`);
                 const response = await axios.get(url);
                 const result = response.data;
 
-                if (result.rc === 'SUCCESS') {
+                // Validate the response structure and check if data exists
+                if (result.rc === 'SUCCESS' && result.payload && result.payload.data) {
                     const data = result.payload.data.results;
-                    const formattedTableData = data.map((item: {
-                        name: string,
-                        population: number,
-                        served: number
-                    }) => ({
-                        name: item.name,
-                        population: item.target_total,
-                        served: item.service_total,
-                    }));
 
-                    setTableData(formattedTableData);
-                    fetchBarChartData(sasaran, 'absolute'); // ambil aggregate dari pilihan absolute, cumulateive , percentage
+                    // Check if the results array is empty
+                    console.log("data total ",data.length);
+                    if (Array.isArray(data) && data.length === 0) {
+                                 setNoDataMessage('Data tidak ditemukan.'); // Set message if no data is found
+                   
+                    } else {
+                        // Clear the message if data is found
+                        setNoDataMessage('');
+                        const formattedTableData = data.map((item: {
+                            name: string,
+                            population: number,
+                            served: number
+                        }) => ({
+                            name: item.name,
+                            population: item.target_total,
+                            served: item.service_total,
+                        }));
+
+                        setTableData(formattedTableData);
+                        fetchBarChartData(sasaran, 'absolute'); // Fetch aggregate data based on the selected option
+                    }
+                } else {
+                    // Handle cases where the response is not successful
+                    setNoDataMessage('Terjadi kesalahan saat mengambil data.'); // Set error message
+                    setTableData([]); // Clear the table data
                 }
             } catch (error) {
                 console.error('Error fetching table data:', error);
+                 setNoDataMessage('Data tidak ditemukan.'); // Set message if no data is found
+                // setNoDataMessage('Terjadi kesalahan saat mengambil data.'); // Set error message
+                setTableData([]); // Clear the table data
             }
         };
+
+
+
 
         fetchDonutData();
         // fetchBarChartData(sasaran, '');
@@ -148,7 +179,7 @@ const Dashboard: React.FC = () => {
                     <SasaranTerlayaniOption onSasaranChange={handleSasaranChange} onSasaran={setSasaran} />
 
                     <div className="grid grid-cols-2 gap-4">
-                        <TableComponent data={tableData}/>
+                        <TableComponent data={tableData} message={noDataMessage}/>
 
                             <FilteredBarChartUtama
                                 prefix={`/data/total-terlayani`}

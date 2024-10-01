@@ -43,6 +43,8 @@ const ServiceDashboard: React.FC = () => {
                             defaultEndDate={endDate}
                             filters={filters}  // passing filters as props
                             barChartColor="#47BDF9"
+                            tampilAkumulatifButton={true}
+
                         />
                         <FilteredBarChart
                             prefix="/data/sasaran-puskesmas-terlayani"
@@ -50,6 +52,7 @@ const ServiceDashboard: React.FC = () => {
                             defaultEndDate={endDate}
                             filters={filters}  // passing filters as props
                             barChartColor="#A77FE9"
+                            tampilAkumulatifButton={false}
                         />
                     </div>
                 </main>
