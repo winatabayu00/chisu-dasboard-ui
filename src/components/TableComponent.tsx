@@ -6,8 +6,8 @@ interface TableComponentProps {
 }
 
 const TableComponent: React.FC<TableComponentProps> = ({ data, message }) => (
-    <div className="bg-white p-4 rounded-lg shadow-md">
-        <table className="min-w-full divide-y divide-gray-200">
+    <div className="relative overflow-x-auto bg-white p-4 rounded-lg shadow-md" style={{ width: '100%', height: '100%' }}>
+        <table className="min-w-full divide-y divide-gray-200" >
             <thead className="bg-[#122B4C] text-white">
                 <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama Sasaran</th>

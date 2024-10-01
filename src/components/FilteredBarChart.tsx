@@ -21,17 +21,17 @@ interface FilteredBarChartProps {
         sasaran: string;
         layanan: string;
     }; // new prop for filters
-    tampilAkumulatifButton?: boolean; 
+    tampilAkumulatifButton?: boolean;
 }
 
 const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
-    prefix,
-    defaultStartDate,
-    defaultEndDate,
-    barChartColor,
-    filters, // destructuring the new filters prop
-    tampilAkumulatifButton
-}) => {
+                                                               prefix,
+                                                               defaultStartDate,
+                                                               defaultEndDate,
+                                                               barChartColor,
+                                                               filters, // destructuring the new filters prop
+                                                               tampilAkumulatifButton
+                                                           }) => {
     const [barChartData, setBarChartData] = useState<BarChartProps>({
         series: [{name: 'Target', data: []}],
         categories: [],
@@ -44,19 +44,19 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
     const fetchBarChartData = async () => {
         try {
             const url = apiUrl(`${prefix}`);
-                   const params = {
-            'region[district]': filters.kecamatan, // Map kecamatan to district
-            'region[sub_district]':filters.sub_district , // Map puskesmas to sub_district
-            'region[health_center]': filters.puskesmas, // Assuming sasaran is health_center
-            'period[type]': 'monthly', // Assuming a fixed type, you can make this dynamic if needed
-            'period[start]': defaultStartDate || '2023-01-01', // Use defaultStartDate or a fallback
-            'period[end]': defaultEndDate || '2023-12-30', // Use defaultEndDate or a fallback
-            aggregate: aggregate,
-            target : filters.sasaran,
-            indicator: filters.layanan // Assuming a fixed indicator, you can make this dynamic if needed
-        };
+            const params = {
+                'region[district]': filters.kecamatan, // Map kecamatan to district
+                'region[sub_district]': filters.sub_district, // Map puskesmas to sub_district
+                'region[health_center]': filters.puskesmas, // Assuming sasaran is health_center
+                'period[type]': 'monthly', // Assuming a fixed type, you can make this dynamic if needed
+                'period[start]': defaultStartDate || '2023-01-01', // Use defaultStartDate or a fallback
+                'period[end]': defaultEndDate || '2023-12-30', // Use defaultEndDate or a fallback
+                aggregate: aggregate,
+                target: filters.sasaran,
+                indicator: filters.layanan // Assuming a fixed indicator, you can make this dynamic if needed
+            };
 
-            const response = await axios.get(url, { params });
+            const response = await axios.get(url, {params});
             const result = response.data;
 
             if (result.rc === 'SUCCESS') {
@@ -124,13 +124,13 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
                     >Absolut
                     </button>
 
-                       {tampilAkumulatifButton && ( // Only render this button if true
-                       
-                            <button
-                                className={`px-4 py-2 rounded-md ${aggregate === 'cumulative' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                                onClick={() => handleFilterAgregate('cumulative')}
-                            >Akumulatif
-                            </button>
+                    {tampilAkumulatifButton && ( // Only render this button if true
+
+                        <button
+                            className={`px-4 py-2 rounded-md ${aggregate === 'cumulative' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                            onClick={() => handleFilterAgregate('cumulative')}
+                        >Akumulatif
+                        </button>
                     )}
                     <button
                         className={`px-4 py-2 rounded-md ${aggregate === 'percentage' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}

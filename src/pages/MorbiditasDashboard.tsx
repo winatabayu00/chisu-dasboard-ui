@@ -45,13 +45,16 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         const fetchMorbiditas = async () => {
             try {
-                const url = apiUrl('/data/morbiditas');
-                const response = await axios.get(url, {
-                    params: {
-                        start_date: startDate,
-                        end_date: endDate
-                    }
-                });
+                const url = apiUrl(`/data/morbiditas`);
+                const params = {
+                    'region[district]': filters.kecamatan, // Map kecamatan to district
+                    'region[sub_district]': filters.sub_district, // Map puskesmas to sub_district
+                    'region[health_center]': filters.puskesmas, // Assuming sasaran is health_center
+                    'period[type]': 'monthly', // Assuming a fixed type, you can make this dynamic if needed
+                    'period[start]': startDate || '2023-01-01', // Use defaultStartDate or a fallback
+                    'period[end]': endDate || '2023-12-30', // Use defaultEndDate or a fallback
+                };
+                const response = await axios.get(url, {params});
                 const result = response.data;
 
                 if (result.rc === 'SUCCESS') {
@@ -70,7 +73,7 @@ const Dashboard: React.FC = () => {
             }
         };
         fetchMorbiditas();
-    }, [startDate, endDate]); // Refetch data when the date range changes
+    }, [startDate, endDate, filters]); // Refetch data when the date range changes
 
     // Initialize and update the ECharts treemap when morbiditasData is available
     useEffect(() => {

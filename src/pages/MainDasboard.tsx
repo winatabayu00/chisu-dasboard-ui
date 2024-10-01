@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
     });
 
 
-   const handleOptionsChange = (newFilters) => {
+    const handleOptionsChange = (newFilters) => {
         setFilters((prevFilters) => ({
             ...prevFilters,
             ...newFilters
@@ -113,10 +113,10 @@ const Dashboard: React.FC = () => {
                     const data = result.payload.data.results;
 
                     // Check if the results array is empty
-                    console.log("data total ",data.length);
+                    console.log("data total ", data.length);
                     if (Array.isArray(data) && data.length === 0) {
-                                 setNoDataMessage('Data tidak ditemukan.'); // Set message if no data is found
-                   
+                        setNoDataMessage('Data tidak ditemukan.'); // Set message if no data is found
+
                     } else {
                         // Clear the message if data is found
                         setNoDataMessage('');
@@ -140,13 +140,11 @@ const Dashboard: React.FC = () => {
                 }
             } catch (error) {
                 console.error('Error fetching table data:', error);
-                 setNoDataMessage('Data tidak ditemukan.'); // Set message if no data is found
+                setNoDataMessage('Data tidak ditemukan.'); // Set message if no data is found
                 // setNoDataMessage('Terjadi kesalahan saat mengambil data.'); // Set error message
                 setTableData([]); // Clear the table data
             }
         };
-
-
 
 
         fetchDonutData();
@@ -176,18 +174,18 @@ const Dashboard: React.FC = () => {
                         <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4"/>
                     </div>
 
-                    <SasaranTerlayaniOption onSasaranChange={handleSasaranChange} onSasaran={setSasaran} />
+                    <SasaranTerlayaniOption onSasaranChange={handleSasaranChange} onSasaran={setSasaran}/>
 
                     <div className="grid grid-cols-2 gap-4">
                         <TableComponent data={tableData} message={noDataMessage}/>
 
-                            <FilteredBarChartUtama
-                                prefix={`/data/total-terlayani`}
-                                defaultStartDate={startDate}
-                                defaultEndDate={endDate}
-                                filters={filters} // Passing the updated filters
-                                barChartColor="#47BDF9"
-                            />
+                        <FilteredBarChartUtama
+                            prefix={`/data/total-terlayani`}
+                            defaultStartDate={startDate}
+                            defaultEndDate={endDate}
+                            filters={filters} // Passing the updated filters
+                            barChartColor="#47BDF9"
+                        />
                     </div>
                 </main>
             </div>
