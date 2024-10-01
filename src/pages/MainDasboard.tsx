@@ -44,9 +44,9 @@ const Dashboard: React.FC = () => {
             }
         };
 
-        const fetchBarChartData = async () => {
+        const fetchBarChartData = async (sasaran, aggregate) => {
             try {
-                const url = apiUrl('/data/sasaran-terlayani');
+                const url = apiUrl(`/data/total-terlayani?target=${sasaran}&aggregate=${aggregate}`);
                 const response = await axios.get(url);
                 const result = response.data;
 
@@ -72,14 +72,15 @@ const Dashboard: React.FC = () => {
                 const result = response.data;
 
                 if (result.rc === 'SUCCESS') {
-                    const data = result.payload.data;
+                    const data = result.payload.data.results;
                     const formattedTableData = data.map((item: { name: string, population: number, served: number }) => ({
                         name: item.name,
-                        population: item.people_count,
-                        served: item.service_count,
+                        population: item.target_total,
+                        served: item.service_total,
                     }));
 
                     setTableData(formattedTableData);
+                    fetchBarChartData(sasaran, null); // ambil aggregate dari pilihan absolute, cumulateive , percentage
                 }
             } catch (error) {
                 console.error('Error fetching table data:', error);
@@ -87,8 +88,8 @@ const Dashboard: React.FC = () => {
         };
 
         fetchDonutData();
-        fetchBarChartData();
-        if (sasaran) fetchTableData(sasaran); // Call fetchTableData with the selected sasaran
+        // fetchBarChartData(sasaran);
+        fetchTableData(sasaran);
 
     }, [sasaran]); // Dependency on sasaran
 
@@ -123,7 +124,7 @@ const Dashboard: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <TableComponent data={tableData} />
                         <FilteredBarChart
-                            prefix="/data/total-terlayani "
+                            prefix="/data/total-terlayani"
                             defaultStartDate={startDate}
                             defaultEndDate={endDate}
                             barChartColor="#47BDF9"

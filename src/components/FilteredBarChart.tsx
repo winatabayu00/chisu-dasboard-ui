@@ -161,17 +161,17 @@ const FilteredBarChart: React.FC<DateRangeFilterProps> = ({
                     <button
                         className={`px-4 py-2 rounded-md ${filter === 'absolute' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChange('absolute')}
-                    >absolute
+                    >Absolut
                     </button>
                     <button
                         className={`px-4 py-2 rounded-md ${filter === 'cumulative' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChange('cumulative')}
-                    >cumulative
+                    >Kumulatif
                     </button>
                     <button
                         className={`px-4 py-2 rounded-md ${filter === 'percentage' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterChange('percentage')}
-                    >percentage
+                    >Persentase
                     </button>
                 </div>
 
