@@ -17,7 +17,10 @@ interface FilteredBarChartProps {
     filters: {
         kecamatan: string;
         puskesmas: string;
+        sub_district: string;
         sasaran: string;
+        layanan: string;
+
     }; // new prop for filters
 }
 
@@ -37,13 +40,17 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
     const fetchBarChartData = async () => {
         try {
             const url = apiUrl(`${prefix}`);
-            const params = {
-                start_date: defaultStartDate,
-                end_date: defaultEndDate,
-                kecamatan: filters.kecamatan,
-                puskesmas: filters.puskesmas,
-                sasaran: filters.sasaran
-            };
+                   const params = {
+            'region[district]': filters.kecamatan, // Map kecamatan to district
+            'region[sub_district]':filters.sub_district , // Map puskesmas to sub_district
+            'region[health_center]': filters.puskesmas, // Assuming sasaran is health_center
+            'period[type]': 'monthly', // Assuming a fixed type, you can make this dynamic if needed
+            'period[start]': defaultStartDate || '2023-01-01', // Use defaultStartDate or a fallback
+            'period[end]': defaultEndDate || '2023-12-30', // Use defaultEndDate or a fallback
+            aggregate: 'absolute',
+            target : filters.sasaran,
+            indicator: filters.layanan // Assuming a fixed indicator, you can make this dynamic if needed
+        };
 
             const response = await axios.get(url, { params });
             const result = response.data;

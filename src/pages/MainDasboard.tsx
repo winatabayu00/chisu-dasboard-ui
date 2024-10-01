@@ -23,6 +23,26 @@ const Dashboard: React.FC = () => {
     const [sasaran, setSasaran] = useState(""); // Track selected Sasaran
     const [tableData, setTableData] = useState([]);
 
+      const [filters, setFilters] = useState({
+        kecamatan: '',
+        puskesmas: '',
+        sub_district: '',
+        sasaran: '',
+        layanan: ''
+
+    });
+
+    const handleOptionsChange = (newFilters) => {
+        setFilters(newFilters);
+    };
+
+    const handleDateChange = (start: string, end: string) => {
+        setStartDate(start);
+        setEndDate(end);
+        console.log('Start Date:', start);
+        console.log('End Date:', end);
+    };
+
     useEffect(() => {
         const fetchDonutData = async () => {
             try {
@@ -93,11 +113,6 @@ const Dashboard: React.FC = () => {
 
     }, [sasaran]); // Dependency on sasaran
 
-    const handleDateChange = (start: string, end: string) => {
-        setStartDate(start);
-        setEndDate(end);
-    };
-
     return (
         <div className="p-4 sm:ml-64">
             <div className="flex h-screen">
@@ -110,7 +125,7 @@ const Dashboard: React.FC = () => {
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
-                    <OptionHeaderDashboard />
+                    <OptionHeaderDashboard onOptionsChange={handleOptionsChange} />
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
@@ -127,6 +142,7 @@ const Dashboard: React.FC = () => {
                             prefix="/data/total-terlayani"
                             defaultStartDate={startDate}
                             defaultEndDate={endDate}
+                            filters={filters}  // passing filters as props
                             barChartColor="#47BDF9"
                         />
                     </div>
