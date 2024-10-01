@@ -85,6 +85,8 @@ const Dashboard: React.FC = () => {
                 series: [
                     {
                         type: 'treemap',
+                        roam: 'move',
+                        nodeClick: false,
                         data: morbiditasData, // Data for treemap
                         label: {
                             show: true,
