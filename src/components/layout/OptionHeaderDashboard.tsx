@@ -11,15 +11,22 @@ function OptionHeaderDashboard({onOptionsChange}) {
     // State for dependencies
     const [selectedKecamatan, setSelectedKecamatan] = useState("");
     const [selectedPuskesmas, setSelectedPuskesmas] = useState("");
+    const [selectedSubDistrict, setSelectedSubDistrict] = useState(""); // State for selected Sasaran
+
     const [selectedSasaran, setSelectedSasaran] = useState(""); // State for selected Sasaran
+
+    const [selectedLayanan, setSelectedLayanan] = useState(""); // State for selected Sasaran
 
    useEffect(() => {
         onOptionsChange({
             kecamatan: selectedKecamatan,
             puskesmas: selectedPuskesmas,
-            sasaran: selectedSasaran
+            sub_district: selectedSubDistrict,
+            sasaran: selectedSasaran,
+            layanan: selectedLayanan
+
         });
-    }, [selectedKecamatan, selectedPuskesmas, selectedSasaran]);
+    }, [selectedKecamatan, selectedPuskesmas,selectedSubDistrict, selectedSasaran,selectedLayanan]);
 
     return (
         <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
@@ -41,6 +48,8 @@ function OptionHeaderDashboard({onOptionsChange}) {
                 endpoint="/select-option/sub-districts" 
                 endpoint={`/select-option/sub-districts?type=${selectedPuskesmas ? "health_center" : "district"}&type_id=${selectedPuskesmas || selectedKecamatan}`} // Update endpoint with selected target
                 isDependent 
+                onChange={setSelectedSubDistrict} // Pass selected value
+
                 dependency={selectedPuskesmas || selectedKecamatan} // Desa/Kelurahan depends on selected Puskesmas or Kecamatan
                 type="health_center" // Specify type for Desa/Kelurahan
             />
@@ -62,7 +71,8 @@ function OptionHeaderDashboard({onOptionsChange}) {
                         endpoint={`/select-option/services?target=${selectedSasaran}`} // Update endpoint with selected target
                         type="service" // Specify type for layanan
                         isDependent // Mark as dependent on Sasaran
-                        dependency={selectedSasaran} // Pass selected Sasaran as dependency
+                        onChange={setSelectedLayanan} // Update state on Sasaran change
+                        dependency={setSelectedSasaran} // Pass selected Sasaran as dependency
                     />
                 </>
             )}

@@ -12,7 +12,10 @@ const ServiceDashboard: React.FC = () => {
     const [filters, setFilters] = useState({
         kecamatan: '',
         puskesmas: '',
-        sasaran: ''
+        sub_district: '',
+        sasaran: '',
+        layanan: ''
+
     });
 
     const handleOptionsChange = (newFilters) => {
