@@ -86,8 +86,7 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
     };
     return (
         <div className="bg-white p-4 rounded-lg shadow-md mb-6">
-            <p className="flex justify-center text-lg font-bold mb-3">Jumlah Sasaran Terlayani</p>
-
+            {/* <p className="flex justify-center text-lg font-bold mb-3">Jumlah Sasaran Terlayani</p> */}
 
             <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center me-2">

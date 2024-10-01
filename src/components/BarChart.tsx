@@ -12,7 +12,7 @@ interface BarChartProps {
 const BarChart: React.FC<BarChartProps> = ({series, categories, colors,sasaranOption, layananOption}) => (
     <div className="bg-white p-4 rounded-lg shadow-md mb-6" style={{ width: '100%', height: '100%' }}>
 
-        <p className="flex justify-center text-lg font-bold">{sasaranOption} {layananOption ? `- ${layananOption}` : ''}</p>
+        <p className="flex justify-center text-lg font-bold">{sasaranOption} {layananOption ? `| ${layananOption}` : ''}</p>
 
         <div className="flex justify-center">
             <Chart
