@@ -10,7 +10,18 @@ const Dashboard: React.FC = () => {
     const [startDate, setStartDate] = useState('2024-01-01');
     const [endDate, setEndDate] = useState('2024-01-31');
     const [morbiditasData, setMorbiditasData] = useState([]); // State for treemap data
+    const [filters, setFilters] = useState({
+        kecamatan: '',
+        puskesmas: '',
+        sub_district: '',
+        sasaran: '',
+        layanan: ''
 
+    });
+
+    const handleOptionsChange = (newFilters) => {
+        setFilters(newFilters);
+    };
     // Function to handle date range changes
     const handleDateChange = (start: string, end: string) => {
         setStartDate(start);
@@ -117,7 +128,7 @@ const Dashboard: React.FC = () => {
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
                     {/* Options header */}
-                    <OptionHeaderDashboard />
+                    <OptionHeaderDashboard onOptionsChange={handleOptionsChange}/>
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 

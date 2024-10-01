@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import DateRangeFilter from "../components/field/DateRangeFilter";
-import { apiUrl } from "../helpers/helpers";
+import {apiUrl} from "../helpers/helpers";
 import OptionHeaderDashboard from "../components/layout/OptionHeaderDashboard";
 import FilteredBarChart from "../components/FilteredBarChart";
 import DonutChart from "../components/DonutChart";
 import TableComponent from "../components/TableComponent";
-import SelectOption from "../components/field/SelectOption";
 import SasaranTerlayaniOption from "../components/SasaranTerlayaniOption";
 import axios from "axios";
 
@@ -16,20 +15,19 @@ const Dashboard: React.FC = () => {
         seriesPenduduk: [0, 0],
         seriesTerlayani: [0, 0],
     });
-    const [barChartData, setBarChartData] = useState({
-        series: [{ name: 'Target', data: [] }],
+    const [setBarChartData] = useState({
+        series: [{name: 'Target', data: []}],
         categories: [],
     });
     const [sasaran, setSasaran] = useState(""); // Track selected Sasaran
     const [tableData, setTableData] = useState([]);
 
-      const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState({
         kecamatan: '',
         puskesmas: '',
         sub_district: '',
         sasaran: '',
         layanan: ''
-
     });
 
     const handleOptionsChange = (newFilters) => {
@@ -49,8 +47,8 @@ const Dashboard: React.FC = () => {
                 const result = response.data;
 
                 if (result.rc === 'SUCCESS') {
-                    const { male: malePenduduk, female: femalePenduduk } = result.payload.data.series_penduduk;
-                    const { male: maleTerlayani, female: femaleTerlayani } = result.payload.data.series_terlayani;
+                    const {male: malePenduduk, female: femalePenduduk} = result.payload.data.series_penduduk;
+                    const {male: maleTerlayani, female: femaleTerlayani} = result.payload.data.series_terlayani;
 
                     setDonutData({
                         seriesPenduduk: [malePenduduk, femalePenduduk],
@@ -74,7 +72,7 @@ const Dashboard: React.FC = () => {
                     const months = data.map((item: { month: string }) => item.month);
 
                     setBarChartData({
-                        series: [{ name: 'Target', data: counts }],
+                        series: [{name: 'Target', data: counts}],
                         categories: months,
                     });
                 }
@@ -91,7 +89,11 @@ const Dashboard: React.FC = () => {
 
                 if (result.rc === 'SUCCESS') {
                     const data = result.payload.data.results;
-                    const formattedTableData = data.map((item: { name: string, population: number, served: number }) => ({
+                    const formattedTableData = data.map((item: {
+                        name: string,
+                        population: number,
+                        served: number
+                    }) => ({
                         name: item.name,
                         population: item.target_total,
                         served: item.service_total,
@@ -121,21 +123,21 @@ const Dashboard: React.FC = () => {
                         onDateChange={handleDateChange}
                     />
 
-                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
 
-                    <OptionHeaderDashboard onOptionsChange={handleOptionsChange} />
+                    <OptionHeaderDashboard onOptionsChange={handleOptionsChange}/>
 
-                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+                    <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                     <div className="grid grid-cols-2 gap-4 mb-6">
-                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC" />
-                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4" />
+                        <DonutChart title="JUMLAH PENDUDUK" series={donutData.seriesPenduduk} colour="#8FFACC"/>
+                        <DonutChart title="JUMLAH TERLAYANI" series={donutData.seriesTerlayani} colour="#FFD4D4"/>
                     </div>
 
-                    <SasaranTerlayaniOption onSasaranChange={setSasaran} />
+                    <SasaranTerlayaniOption onSasaranChange={setSasaran}/>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <TableComponent data={tableData} />
+                        <TableComponent data={tableData}/>
                         <FilteredBarChart
                             prefix="/data/total-terlayani"
                             defaultStartDate={startDate}

@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
-import SelectOption from '../components/field/SelectOption.tsx';
 import OptionHeaderDashboard from '../components/layout/OptionHeaderDashboard.tsx';
 import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
-import {apiUrl} from "../helpers/helpers";
-import axios from "axios";
 import FilteredBarChart from "../components/FilteredBarChart.tsx";
 
 const ServiceDashboard: React.FC = () => {

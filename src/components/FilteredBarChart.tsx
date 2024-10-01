@@ -20,7 +20,6 @@ interface FilteredBarChartProps {
         sub_district: string;
         sasaran: string;
         layanan: string;
-
     }; // new prop for filters
 }
 
@@ -37,6 +36,9 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
         colors: `${barChartColor}`,
     });
 
+    const [filterDate, setFilterDate] = useState('monthly');
+    const [aggregate, setAggregate] = useState('absolute');
+
     const fetchBarChartData = async () => {
         try {
             const url = apiUrl(`${prefix}`);
@@ -47,7 +49,7 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
             'period[type]': 'monthly', // Assuming a fixed type, you can make this dynamic if needed
             'period[start]': defaultStartDate || '2023-01-01', // Use defaultStartDate or a fallback
             'period[end]': defaultEndDate || '2023-12-30', // Use defaultEndDate or a fallback
-            aggregate: 'absolute',
+            aggregate: aggregate,
             target : filters.sasaran,
             indicator: filters.layanan // Assuming a fixed indicator, you can make this dynamic if needed
         };
@@ -73,11 +75,74 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
 
     useEffect(() => {
         fetchBarChartData();
-    }, [defaultStartDate, defaultEndDate, filters]);  // re-fetch when filters or date range changes
+    }, [defaultStartDate, defaultEndDate, filters, aggregate]);  // re-fetch when filters or date range changes
 
+    const handleFilterAgregate = (selectedFilter: string) => {
+        setAggregate(selectedFilter);
+    };
+
+    const handleFilterChangeDate = (selectedFilter: string) => {
+        setFilterDate(selectedFilter);
+    };
     return (
-        <div>
-            <BarChart series={barChartData.series} categories={barChartData.categories} colors={barChartData.colors} />
+        <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+            <p className="flex justify-center text-lg font-bold mb-3">Jumlah Sasaran Terlayani</p>
+
+
+            <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center me-2">
+                    <i className="fas fa-filter mr-2"></i>
+                    <button
+                        disabled={true} hidden="hidden"
+                        className={`px-4 py-2 rounded-md ${filterDate === 'weekly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterChangeDate('weekly')}
+                    >
+                        weekly
+                    </button>
+
+                    <button hidden="hidden"
+                            className={`px-4 py-2 rounded-md ${filterDate === 'monthly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                            onClick={() => handleFilterChangeDate('monthly')}
+                    >
+                        monthly
+                    </button>
+                    <button hidden="hidden"
+                            disabled={true}
+                            className={`px-4 py-2 rounded-md ${filterDate === 'yearly' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                            onClick={() => handleFilterChangeDate('yearly')}
+                    >
+                        yearly
+                    </button>
+                </div>
+
+                <div className="flex items-center me-2">
+                    <i className="fas fa-filter mr-2"></i>
+                    <button
+                        className={`px-4 py-2 rounded-md ${aggregate === 'absolute' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterAgregate('absolute')}
+                    >Absolut
+                    </button>
+                    <button
+                        className={`px-4 py-2 rounded-md ${aggregate === 'cumulative' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterAgregate('cumulative')}
+                    >Kumulatif
+                    </button>
+                    <button
+                        className={`px-4 py-2 rounded-md ${aggregate === 'percentage' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                        onClick={() => handleFilterAgregate('percentage')}
+                    >Persentase
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-6">
+
+                </div>
+            </div>
+
+            <div className="flex justify-center">
+                <BarChart series={barChartData.series} categories={barChartData.categories}
+                          colors={barChartData.colors} sasaranOption={filters.sasaran} layananOption={filters.layanan}/>
+            </div>
         </div>
     );
 };
