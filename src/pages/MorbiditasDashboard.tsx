@@ -10,7 +10,9 @@ const Dashboard: React.FC = () => {
     const [startDate, setStartDate] = useState('2024-01-01');
     const [endDate, setEndDate] = useState('2024-01-31');
     const [morbiditasData, setMorbiditasData] = useState([]); // State for treemap data
-    const [filters, setFilters] = useState({
+
+
+      const [filters, setFilters] = useState({
         kecamatan: '',
         puskesmas: '',
         sub_district: '',
@@ -19,9 +21,20 @@ const Dashboard: React.FC = () => {
 
     });
 
-    const handleOptionsChange = (newFilters) => {
-        setFilters(newFilters);
+   const handleOptionsChange = (newFilters) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            ...newFilters
+        }));
     };
+
+    const handleSasaranChange = (sasaran: string) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            sasaran  // Update only the sasaran in the filters object
+        }));
+    };
+
     // Function to handle date range changes
     const handleDateChange = (start: string, end: string) => {
         setStartDate(start);
@@ -128,7 +141,7 @@ const Dashboard: React.FC = () => {
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
                     {/* Options header */}
-                    <OptionHeaderDashboard onOptionsChange={handleOptionsChange}/>
+                    <OptionHeaderDashboard onOptionsChange={handleOptionsChange} />
 
                     <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
 
