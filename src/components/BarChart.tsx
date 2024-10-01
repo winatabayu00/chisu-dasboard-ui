@@ -67,10 +67,16 @@ const BarChart: React.FC<BarChartProps> = ({ series, categories, colors, sasaran
                         xaxis: { categories },
                         yaxis: { title: { text: 'Jumlah' } },
                         tooltip: {
-                            y: { formatter: (val: number) => `${val} layanan` }
+                            y: { formatter: (val: number) => `${val} layanan` },
+                            theme: 'dark', // Options: 'dark', 'light', or 'custom'
+                            style: {
+                                fontSize: '12px',
+                                fontFamily: 'Arial, sans-serif',
+                            },
                         },
                         colors: [colors],
                     }}
+
                 />
             </div>
         </div>
