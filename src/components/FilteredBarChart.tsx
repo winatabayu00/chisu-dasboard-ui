@@ -21,6 +21,7 @@ interface FilteredBarChartProps {
         sasaran: string;
         layanan: string;
     }; // new prop for filters
+    tampilAkumulatifButton?: boolean; 
 }
 
 const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
@@ -28,7 +29,8 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
     defaultStartDate,
     defaultEndDate,
     barChartColor,
-    filters // destructuring the new filters prop
+    filters, // destructuring the new filters prop
+    tampilAkumulatifButton
 }) => {
     const [barChartData, setBarChartData] = useState<BarChartProps>({
         series: [{name: 'Target', data: []}],
@@ -121,11 +123,15 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
                         onClick={() => handleFilterAgregate('absolute')}
                     >Absolut
                     </button>
-                    <button
-                        className={`px-4 py-2 rounded-md ${aggregate === 'cumulative' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-                        onClick={() => handleFilterAgregate('cumulative')}
-                    >Kumulatif
-                    </button>
+
+                       {tampilAkumulatifButton && ( // Only render this button if true
+                       
+                            <button
+                                className={`px-4 py-2 rounded-md ${aggregate === 'cumulative' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+                                onClick={() => handleFilterAgregate('cumulative')}
+                            >Akumulatif
+                            </button>
+                    )}
                     <button
                         className={`px-4 py-2 rounded-md ${aggregate === 'percentage' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                         onClick={() => handleFilterAgregate('percentage')}
