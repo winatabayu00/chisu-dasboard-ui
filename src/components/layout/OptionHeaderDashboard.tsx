@@ -45,7 +45,6 @@ function OptionHeaderDashboard({onOptionsChange}) {
             />
             <OptionField
                 label="Desa / Kelurahan"
-                endpoint="/select-option/sub-districts"
                 endpoint={`/select-option/sub-districts?type=${selectedPuskesmas ? "health_center" : "district"}&type_id=${selectedPuskesmas || selectedKecamatan}`} // Update endpoint with selected target
                 isDependent
                 onChange={setSelectedSubDistrict} // Pass selected value
