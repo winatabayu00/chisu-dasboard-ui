@@ -9,8 +9,8 @@ import SasaranTerlayaniOption from "../components/SasaranTerlayaniOption";
 import axios from "axios";
 
 const Dashboard: React.FC = () => {
-    const [startDate, setStartDate] = useState('01/01/2024');
-    const [endDate, setEndDate] = useState('01/31/2024');
+    const [startDate, setStartDate] = useState('2024-01-01');
+    const [endDate, setEndDate] = useState('2024-12-31');
     const [donutData, setDonutData] = useState({
         seriesPenduduk: [0, 0],
         seriesTerlayani: [0, 0],
@@ -100,7 +100,7 @@ const Dashboard: React.FC = () => {
                     }));
 
                     setTableData(formattedTableData);
-                    fetchBarChartData(sasaran, null); // ambil aggregate dari pilihan absolute, cumulateive , percentage
+                    fetchBarChartData(sasaran, ''); // ambil aggregate dari pilihan absolute, cumulateive , percentage
                 }
             } catch (error) {
                 console.error('Error fetching table data:', error);
@@ -108,7 +108,7 @@ const Dashboard: React.FC = () => {
         };
 
         fetchDonutData();
-        // fetchBarChartData(sasaran);
+        // fetchBarChartData(sasaran, '');
         fetchTableData(sasaran);
 
     }, [sasaran]); // Dependency on sasaran

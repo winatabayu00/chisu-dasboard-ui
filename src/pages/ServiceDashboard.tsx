@@ -4,8 +4,8 @@ import DateRangeFilter from "../components/field/DateRangeFilter.tsx";
 import FilteredBarChart from "../components/FilteredBarChart.tsx";
 
 const ServiceDashboard: React.FC = () => {
-    const [startDate, setStartDate] = useState('01/01/2024');
-    const [endDate, setEndDate] = useState('01/31/2024');
+    const [startDate, setStartDate] = useState('2024-01-01');
+    const [endDate, setEndDate] = useState('2024-12-31');
     const [filters, setFilters] = useState({
         kecamatan: '',
         puskesmas: '',
