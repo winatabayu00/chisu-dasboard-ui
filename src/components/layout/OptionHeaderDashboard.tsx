@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { apiUrl } from "../../helpers/helpers";
 import axios from 'axios';
 
-function OptionHeaderDashboard() {
+function OptionHeaderDashboard({onOptionsChange}) {
     const location = useLocation();
     const gridCols = location.pathname === '/dilp/service-dashboard' ? 'grid-cols-5' : 'grid-cols-4';
 
@@ -12,6 +12,14 @@ function OptionHeaderDashboard() {
     const [selectedKecamatan, setSelectedKecamatan] = useState("");
     const [selectedPuskesmas, setSelectedPuskesmas] = useState("");
     const [selectedSasaran, setSelectedSasaran] = useState(""); // State for selected Sasaran
+
+   useEffect(() => {
+        onOptionsChange({
+            kecamatan: selectedKecamatan,
+            puskesmas: selectedPuskesmas,
+            sasaran: selectedSasaran
+        });
+    }, [selectedKecamatan, selectedPuskesmas, selectedSasaran]);
 
     return (
         <div className={`grid ${gridCols} gap-4 mb-6 mt-4`}>
