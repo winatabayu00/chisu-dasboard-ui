@@ -21,7 +21,6 @@ const SelectOption: React.FC<SelectOptionParams> = ({ options, onChange, default
     }
   };
 
-  // console.log("Selected Value ", selectedOption);
   return (
     <select
       value={selectedOption}

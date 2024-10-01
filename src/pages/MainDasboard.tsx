@@ -39,8 +39,6 @@ const Dashboard: React.FC = () => {
     const handleDateChange = (start: string, end: string) => {
         setStartDate(start);
         setEndDate(end);
-        console.log('Start Date:', start);
-        console.log('End Date:', end);
     };
 
     useEffect(() => {

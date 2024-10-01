@@ -60,9 +60,6 @@ const FilteredBarChart: React.FC<FilteredBarChartProps> = ({
                 const counts = data.map((item: { count: number }) => item.count);
                 const categories = data.map((item: { name: string }) => item.name);
 
-                console.log("dta count ", counts);
-                console.log("dta categories ", categories);
-
                 setBarChartData({
                     series: [{name: 'Target', data: counts}],
                     categories,

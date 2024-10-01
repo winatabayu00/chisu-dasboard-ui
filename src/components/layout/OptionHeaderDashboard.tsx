@@ -88,16 +88,11 @@ const useFetchOptions = (endpoint, isDependent = false, dependency = null, type 
         const fetchOptions = async () => {
             if (isDependent && !dependency) return; // Don't fetch if dependency is required and not available
 
-            console.log("health_center", type);
-
-
-
             try {
                 const url = isDependent && dependency
                     ? apiUrl(endpoint) // Use base endpoint directly, as dependency already included in OptionField
                     : apiUrl(endpoint); // Always include type in the API request
                 const response = await axios.get(url);
-                console.log("response", response.data.payload);
 
                 const data = response.data.payload.data;
                 const mappedOptions = data.map(item => ({

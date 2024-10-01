@@ -32,7 +32,6 @@ const SasaranTerlayaniOption: React.FC<SasaranTerlayaniOptionProps> = ({ onSasar
     }, []);
 
     const handleSelectChange = (value: string) => {
-        console.log("Selected option:", value);
         setSelected(value || "");
         onSasaranChange(value || ""); // Pass the selected value to the parent
     };
