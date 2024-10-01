@@ -64,7 +64,7 @@ function OptionHeaderDashboard() {
 
 // Custom hook to handle fetching options from API
 const useFetchOptions = (endpoint, isDependent = false, dependency = null, type = null) => {
-    const [options, setOptions] = useState([{ value: "", label: `Pilih ${endpoint.split('/').pop()}` }]);
+    const [options, setOptions] = useState([{ value: "", label: `Pilih Salah Satu` }]);
 
     useEffect(() => {
         const fetchOptions = async () => {
@@ -86,7 +86,7 @@ const useFetchOptions = (endpoint, isDependent = false, dependency = null, type 
                     value: item.id,
                     label: item.name,
                 }));
-                setOptions([{ value: "", label: `Pilih ${endpoint.split('/').pop()}` }, ...mappedOptions]);
+                setOptions([{ value: "", label: `Pilih Salah Satu` }, ...mappedOptions]);
             } catch (error) {
                 console.error("Failed to fetch options:", error);
             }

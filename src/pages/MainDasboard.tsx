@@ -123,7 +123,7 @@ const Dashboard: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <TableComponent data={tableData} />
                         <FilteredBarChart
-                            prefix="/data/sasaran-terlayani"
+                            prefix="/data/total-terlayani "
                             defaultStartDate={startDate}
                             defaultEndDate={endDate}
                             barChartColor="#47BDF9"
